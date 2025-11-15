@@ -8,8 +8,8 @@ export default function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const contentRef = useRef(null);
-    const scrollIndicatorRef = useRef(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const scrollIndicatorRef = useRef<HTMLAnchorElement>(null);
 
     // Dynamic height calculation for the "Read More" section
     useEffect(() => {
@@ -20,24 +20,30 @@ export default function App() {
 
     // Scroll Indicator Fade Logic
     useEffect(() => {
-        const indicator = scrollIndicatorRef.current;
-        if (!indicator) return;
+    const indicator = scrollIndicatorRef.current;
+    if (!indicator) return;  // Fix: prevents TypeScript "never" errors
 
-        const fadePoint = window.innerHeight * 0.8;
+    indicator.classList.add("opacity-0");
 
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-            
-            if (window.scrollY > fadePoint) {
-                indicator.classList.add('opacity-0');
-            } else {
-                indicator.classList.remove('opacity-0');
-            }
-        };
+    const fadePoint = window.innerHeight * 0.8;
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const handleScroll = () => {
+        setScrolled(window.scrollY > 50);
+
+        const indicatorEl = scrollIndicatorRef.current;
+        if (!indicatorEl) return; // Fix: ensures safe access again
+
+        if (window.scrollY > fadePoint) {
+            indicatorEl.classList.add("opacity-0");
+        } else {
+            indicatorEl.classList.remove("opacity-0");
+        }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
 
     const BounceArrow = () => (
         <svg 
