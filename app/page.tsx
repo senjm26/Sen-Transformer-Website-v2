@@ -74,12 +74,13 @@ export default function App() {
                         <img 
                             src="/Logo.png" 
                             alt="Sen Engineering Solutions Logo" 
-                            className="w-8 h-8 object-contain"
                             width={21}        // adjust size as needed
                             height={21}
-                            className={`transition-all duration-500 ${
-                            scrolled ? 'opacity-90' : 'opacity-100'
-                            }`}
+                            className={`
+                            w-8 h-8 object-contain
+                            transition-all duration-500
+                            ${scrolled ? 'opacity-90' : 'opacity-100'}
+                            `}
                         />
                         <span className={`text-2xl font-extrabold tracking-wider transition-colors duration-500 ${
                             scrolled ? 'text-gray-900' : 'text-[#F9FAFB]'
@@ -466,7 +467,11 @@ export default function App() {
                                         src="/kks1.jpg" 
                                         alt="KKS Profile Photo" 
                                         className="w-40 h-40 rounded-full object-cover border-3 border-[#3B82F6] shadow-xl"
-                                        onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x200/1E3A8A/F9FAFB?text=KKS'; }}
+                                        onError={(e) => {
+                                        const img = e.currentTarget as HTMLImageElement;
+                                        img.onerror = null;
+                                        img.src = "https://placehold.co/200x200/1E3A8A/F9FAFB?text=KKS";
+                                        }}
                                     />
                                 </div>
 
@@ -522,7 +527,11 @@ export default function App() {
                                         src="mls1.jpg" 
                                         alt="MLS Profile Photo" 
                                         className="w-40 h-40 rounded-full object-cover border-3 border-[#3B82F6] shadow-xl"
-                                        onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x200/3B82F6/111827?text=MLS'; }}
+                                        onError={(e) => {
+                                        const img = e.currentTarget as HTMLImageElement;
+                                        img.onerror = null;
+                                        img.src = "https://placehold.co/200x200/1E3A8A/F9FAFB?text=KKS";
+                                        }}
                                     />
                                 </div>
 
