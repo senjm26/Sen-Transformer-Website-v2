@@ -332,7 +332,7 @@ export default function App() {
 
                                 {/* Book 2 Card */}
                                 <div className="flex flex-col sm:flex-row bg-white rounded-xl shadow-2xl p-6 hover:shadow-[#1E3A8A]/20 transition-all duration-300 hover:-translate-y-1">
-                                    <img src="/book2.jpg" 
+                                    <img src="/book2.JPG" 
                                         alt="Power Flow Control Solutions Book Cover" 
                                         className="w-full sm:w-1/3 h-auto sm:h-auto rounded-lg mb-4 sm:mb-0 sm:mr-6 object-cover flex-shrink-0" />
                                     
@@ -411,7 +411,7 @@ export default function App() {
                 {/* OUR PROJECTS CONTENT (Dark Theme) */}
                 <section id="projects-content" className="py-16 sm:py-24 bg-[#111827] text-[#F9FAFB] border-t border-gray-700">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-                        <h1 className="text-5xl font-extrabold text-center mb-16 text-[#3B82F6]">Introducing the World's First Commercial-Grade ST</h1>
+                        <h1 className="text-5xl font-extrabold text-center mb-16 text-[#3B82F6]">Introducing the World's First Commercial-Grade Sen Transformer</h1>
 
                         <div className="space-y-12">
                             
@@ -425,7 +425,7 @@ export default function App() {
                             className="rounded-xl shadow-2xl border-4 border-gray-700 object-cover w-full h-auto"
                             />
                             <p className="mt-4 text-sm text-gray-400 text-center">
-                                  Image of the successfully tested commercial-grade ST unit.
+                                  Image of the successfully tested commercial-grade Sen Transformer unit.
                             </p>
                             </div>
 
