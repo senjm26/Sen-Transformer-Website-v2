@@ -74,8 +74,8 @@ export default function App() {
                         <img 
                             src="/Logo.png" 
                             alt="Sen Engineering Solutions Logo" 
-                            width={21}        // adjust size as needed
-                            height={21}
+                            width={100}        // adjust size as needed
+                            height={100}
                             className={`
                             w-8 h-8 object-contain
                             transition-all duration-500
@@ -148,7 +148,7 @@ export default function App() {
                             Sen Engineering Solutions, Inc.
                         </h1>
                         <p className="text-xl sm:text-2xl text-[#9CA3AF] max-w-4xl mx-auto">
-                            A technology company developing the <strong>SMART Power Flow Controller</strong> — a functional, requirements-based, cost-effective solution.
+                            A technology company developing the <strong>SMART Power Flow Controller</strong> — a functional requirements-based, cost-effective solution.
                         </p>
                     </div>
 
@@ -173,7 +173,7 @@ export default function App() {
                         {/* Introduction */}
                         <div className="mb-16 text-center animate-fade-in-up">
                             <p className="text-xl text-[#374151] leading-relaxed mb-8">
-                                <strong>SMART Power Flow Controller</strong> is a breakthrough in bulk power system technology, hosting a range of benefits over traditional power flow solutions. SMART Power Flow Controller, a patented technology, acts as an Impedance Regulating Transformer and offers a plethora of power flow control features in one, multi-use unit to provide a reliable, cost‐effective, and portable solution to meet today's needs to modernize the grid.
+                                <strong>SMART Power Flow Controller</strong> is a breakthrough in bulk power system technology, hosting a range of benefits over traditional power flow solutions. SMART Power Flow Controller, a patented technology, acts as an Impedance Regulating Transformer and offers a plethora of power flow control features independent active and reactive power flows, voltage, phase angle, Impedance (XL or XC and R or –R, all independently variable) in one, multi-use unit to provide a reliable, cost‐effective, and portable solution to meet today's needs to modernize the grid.
                             </p>
 
                             {/* Product Image Suggestion Placement */}
@@ -201,7 +201,7 @@ export default function App() {
                                 The SMART Power Flow Controller (SPFC) redefines how electricity moves through the grid — offering precise, independent control over active and reactive power. By intelligently managing energy flow, it maximizes efficiency, enhances reliability, and minimizes losses across the transmission network.
                             </p>
                             <p className="text-lg text-[#374151] leading-relaxed mb-8">
-                                Unlike traditional solutions built around a single technology, the SPFC unites the best features of all power-flow concepts — both electronic and mechanical — into one, functional-requirements-based system that's simple, scalable, and cost-effective.
+                                Unlike traditional solutions built around a single technology, the SPFC unites the best features of all power-flow concepts developed until now into one, functional-requirements-based system that's simple, scalable, and cost-effective.
                             </p>
                             
                             {/* Read More Toggle Button */}
@@ -217,7 +217,7 @@ export default function App() {
                                     The SPFC acts as an <strong>impedance-regulating transformer</strong>, dynamically adjusting both resistance and reactance in a transmission line. This allows it to control power flows independently, maximizing useful active power and minimizing unwanted reactive power.
                                 </p>
                                 <p className="text-lg text-[#374151] leading-relaxed mb-8">
-                                    While power-electronics-based systems can react in milliseconds, most utility applications only require response times measured in seconds. The SPFC's design meets those real-world functional requirements delivering high performance at a fraction of the cost of electronics-only systems.
+                                    While power-electronics-based systems can react in milliseconds, most utility applications only require response times measured in seconds or longer. The SPFC's design meets those real-world functional requirements delivering high performance at a fraction of the cost of power electronics solutions.
                                 </p>
 
                                 <h5 className="text-xl font-bold text-[#1E3A8A] mb-4">Functional Principles (S.M.A.R.T.)</h5>
@@ -361,18 +361,27 @@ export default function App() {
                                 <section>
                                     <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Technical Publications (IEEE)</h2>
                                     <ul className="space-y-3 bg-white p-6 rounded-xl shadow-lg border border-gray-200 divide-y divide-gray-100">
-                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/6474988" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Voltage and Power Flow Control Using Sen Transformers – IEEE</a></li>
-                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/abstract/document/4483685" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Thyristor-Based Phase Angle Regulator – IEEE</a></li>
-                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/1271050" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Comprehensive Power Flow Control Techniques – IEEE</a></li>
-                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/4265677" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Cost Analysis of Power Flow Controllers – IEEE</a></li>
-                                    </ul>
-                                </section>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/11225700" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Advancements in Transformer Technology: Design, Manufacture, and Testing of a ±6.5 MVA, 33 kV Sen Transformer - IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/7741518" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Unique Capabilities of Sen Transformer: A power Flow Regulating Transformer – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/7741516" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Comparison of Operational Characteristics Between a Sen Transformer and a Phase Angle Regulator – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/7286343" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">SMART Power Flow Controller for Smarter Grid Applications – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/6474988" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Introducing the SMART Power Flow Controller - an Integral Part of Smart Grid – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/6990286" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Analysis of FACTS Controllers and their Transient Modelling Techniques – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/1234714" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Comparison of the 'Sen' Transformer with the Unified Power Flow Controller – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/1159911" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Introducing the Family of "Sen" Transformers: A Set of Power Flow Controlling Transformers – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/1159935" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Comparison of Field Results and Digital Simulation Results of Voltage-sourced Converter-based FACTS Controllers – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/985049" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Versatile Power Flow Transformer – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/868721" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">A Power Flow Controller with a Stable Reversing Capability – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/747375" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">STATCOM-STATic Synchronous COMpensator: Theory, Modeling, and Applications – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/772382" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">The Interline Power Flow Controller Concept: A New Approach to Power Flow Management in Transmission Systems – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/714629" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">UPFC-Unified Power Flow Controller: Theory, Modeling, and Applications – IEEE</a></li>
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/568265" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Static Synchronous Series Compensator: A Solid-state Approach to the Series Compensation of Transmission Lines – IEEE</a></li>
 
-                                <section>
-                                    <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Industry & Media Articles</h2>
-                                    <ul className="space-y-3 bg-white p-6 rounded-xl shadow-lg border border-gray-200 divide-y divide-gray-100">
-                                        <li className="pt-2"><a href="https://www.toastmasters.org/magazine/magazine-issues/2019/jan/6-quick-takes-member-moment" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">6 Quick Takes: Member Moment – Toastmasters Magazine</a></li>
-                                        <li className="pt-2"><a href="https://www.how2power.org/article/2017/february/phase-angle-regulation-versus-impedance-control-which-offers-greater-control-of-power-flow-on-the-grid.php" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Phase Angle vs Impedance Control – How2Power</a></li>
+
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/abstract/document/4483685" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Detailed Real-Time Transient Model of the “Sen” Transformer – IEEE</a></li>
+                                        
+                                        <li className="pt-2"><a href="https://ieeexplore.ieee.org/document/4265677" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">A Tap-Changing Algorithm for the Implementation of “Sen” Transformer – IEEE</a></li>
+
                                     </ul>
                                 </section>
                             </div>
@@ -380,25 +389,23 @@ export default function App() {
                             {/* Right Column: ResearchGate & PDF Documents */}
                             <div className="lg:col-span-1 space-y-10">
                                 <section>
-                                    <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">ResearchGate Articles</h2>
+                                    <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Industry Articles</h2>
                                     <ul className="space-y-3 bg-white p-6 rounded-xl shadow-lg border border-gray-200 divide-y divide-gray-100">
-                                        <li className="pt-2"><a href="https://www.researchgate.net/publication/282295139_Overview_Of_Voltage_Regulation_Schemes_For_Utility_And_Industrial_Applications" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Overview Of Voltage Regulation Schemes</a></li>
-                                        <li className="pt-2"><a href="https://www.researchgate.net/publication/282295137_Practical_Power_Flow_Controller_Brings_Benefits_Of_Power_Electronics_To_The_Grid" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Practical Power Flow Controller</a></li>
-                                        <li className="pt-2"><a href="https://www.researchgate.net/publication/295103840_Introducing_the_family_of_Sen_transformers_a_set_of_power_flow_controlling_transformers" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Family of Sen Transformers</a></li>
+                                        <li className="pt-2"><a href="https://transformer-technology.com/article-hub/the-sen-transformer-technology-digital-article/" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">The Sen Transformer – Transformer Technology</a></li>
+                                        <li className="pt-2"><a href="https://www.how2power.com/pdf_view.php?url=/newsletters/1503/articles/H2PToday1503_design_Sen.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Practical Power Flow Controller Brings Benefits Of Power Electronics To The Grid - How2Power</a></li>
+                                        <li className="pt-2"><a href="https://www.how2power.com/pdf_view.php?url=/newsletters/1702/articles/H2PToday1702_design_Sen.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Phase Angle Regulation Versus Impedance Regulation: Which Offers Greater Control Of Power Flow On the Grid? – How2Power</a></li>
+                                        <li className="pt-2"><a href="https://www.how2power.com/pdf_view.php?url=/newsletters/1803/articles/H2PToday1803_design_Sen.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Modeling Of The Sen Transformer Using An Electromagnetic Transients Program - How2Power</a></li>
+                                        <li className="pt-2 flex justify-between items-center hover:bg-gray-50 transition-all duration-200">
+                                            <a href="http://files.midphasesitebuilder.com/ad/33/ad335f60-d07b-4b8b-a9a3-ef0b6ab450ee.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">SPFC Overview – Midphase PDF 2</a></li>
                                     </ul>
                                 </section>
 
                                 <section>
-                                    <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">SPFC PDF Documents</h2>
+                                    <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Press Releases</h2>
                                     <ul className="space-y-3 bg-white p-6 rounded-xl shadow-lg border border-gray-200 divide-y divide-gray-100">
-                                        <li className="pt-2 flex justify-between items-center hover:bg-gray-50 transition-all duration-200">
-                                            <a href="http://files.midphasesitebuilder.com/54/d3/54d32047-3264-4c9b-8394-6354200ab653.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition duration-200">SPFC Overview – Midphase PDF 1</a>
-                                            <svg className="w-5 h-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                        </li>
-                                        <li className="pt-2 flex justify-between items-center hover:bg-gray-50 transition-all duration-200">
-                                            <a href="http://files.midphasesitebuilder.com/ad/33/ad335f60-d07b-4b8b-a9a3-ef0b6ab450ee.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition duration-200">SPFC Overview – Midphase PDF 2</a>
-                                            <svg className="w-5 h-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                        </li>
+                                        <li className="pt-2"><a href="https://www.nypa.gov/news/press-releases/2021/20211028-transformer" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">NYPA Energy Innovator News Brief – NYPA Press Release</a></li>
+                                        <li className="pt-2"><a href="http://files.midphasesitebuilder.com/54/d3/54d32047-3264-4c9b-8394-6354200ab653.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">SPFC Overview – Midphase PDF 1</a></li>
+                                        <li className="pt-2"><a href="https://www.toastmasters.org/magazine/magazine-issues/2019/jan/6-quick-takes-member-moment" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">6 Quick Takes: Member Moment – Toastmasters Magazine</a></li>
                                     </ul>
                                 </section>
                             </div>
@@ -436,7 +443,7 @@ export default function App() {
                                     "Ampcontrol is excited to announce that in collaboration with @Sen Engineering Solutions, Inc., we have designed, manufactured and extensively tested the <strong>world's first commercial-grade Sen Transformer</strong>, a patented technology, that acts as an Impedance Regulating Transformer. Sometimes, there comes a technical advancement that is simple, elegant and effective.
                                 </p>
                                 <p>
-                                    Sen Transformer marks the first breakthrough in bulk power system design in more than a century, hosting a range of benefits over traditional power flow solutions. Sen Transformer, which offers a plethora of power flow control features, such as independent active and reactive power flows, voltage, phase angle, impedance, all in one unit, uses time‐tested components, such as transformer and load tap changers that are proven to be reliable, cost‐effective, and portable to meet today's needs to modernize the grid.
+                                    Sen Transformer marks the first breakthrough in bulk power system design in more than a century, hosting a range of benefits over traditional power flow solutions. Sen Transformer, which offers a plethora of power flow control features, such as independent active and reactive power flows, voltage, phase angle, impedance (XL or XC and R or –R, all independently variable), all in one unit, uses time‐tested components, such as transformer and load tap changers that are proven to be reliable, cost‐effective, and portable to meet today's needs to modernize the grid.
                                 </p>
                                 <p>
                                     A commercial-grade Sen Transformer was designed to operate at <strong>33 kV</strong> with a throughput rating of <strong>±6.5 MVA</strong>. The unit was manufactured and tested to demonstrate the proof of concept. The test results show that the bidirectional active and reactive power flows can be regulated independently, proving that the Sen Transformer is a practical solution to meet utilities' needs in terms of reliability, cost-effectiveness, component non-obsolescence, efficiency, portability and interoperability.
@@ -569,7 +576,7 @@ export default function App() {
                                             <li><strong>Business Leadership:</strong> Served as President of Sen Engineering Solutions, Inc. (2002-2020) and consulted for ABB and Westinghouse.</li>
                                             <li><strong>Technical Contributions:</strong> Coauthored <strong>7 peer-reviewed publications, 5 issued patents, and 2 books</strong> focused on power flow control.</li>
                                             <li><strong>IEEE Recognition:</strong> Recipient of the <strong>IEEE Pittsburgh Section Power & Energy Society Outstanding Engineer Award</strong> (2018) for service and technical contributions.</li>
-                                            <li><strong>Community & Service:</strong> Recognized as a <strong>Distinguished Toastmaster (DTM)</strong>; served in various leadership roles for IEEE Pittsburgh Chapters.</li>
+                                            <li><strong>Community & Service:</strong> Recognized as a <strong>Distinguished Toastmaster (DTM)</strong>; served in various leadership roles for IEEE Pittsburgh Section/Chapters.</li>
                                         </ul>
                                     </div>
                                 </div>
