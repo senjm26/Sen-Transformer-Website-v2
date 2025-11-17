@@ -396,7 +396,7 @@ export default function App() {
                                         <li className="pt-2"><a href="https://www.how2power.com/pdf_view.php?url=/newsletters/1702/articles/H2PToday1702_design_Sen.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Phase Angle Regulation Versus Impedance Regulation: Which Offers Greater Control Of Power Flow On the Grid? – How2Power</a></li>
                                         <li className="pt-2"><a href="https://www.how2power.com/pdf_view.php?url=/newsletters/1803/articles/H2PToday1803_design_Sen.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Modeling Of The Sen Transformer Using An Electromagnetic Transients Program - How2Power</a></li>
                                         <li className="pt-2 flex justify-between items-center hover:bg-gray-50 transition-all duration-200">
-                                            <a href="http://files.midphasesitebuilder.com/ad/33/ad335f60-d07b-4b8b-a9a3-ef0b6ab450ee.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">SPFC Overview – Midphase PDF 2</a></li>
+                                            <a href="http://files.midphasesitebuilder.com/ad/33/ad335f60-d07b-4b8b-a9a3-ef0b6ab450ee.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Modeling of the Sen Transformer in PSS®E</a></li>
                                     </ul>
                                 </section>
 
@@ -404,8 +404,8 @@ export default function App() {
                                     <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Press Releases</h2>
                                     <ul className="space-y-3 bg-white p-6 rounded-xl shadow-lg border border-gray-200 divide-y divide-gray-100">
                                         <li className="pt-2"><a href="https://www.nypa.gov/news/press-releases/2021/20211028-transformer" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">NYPA Energy Innovator News Brief – NYPA Press Release</a></li>
-                                        <li className="pt-2"><a href="http://files.midphasesitebuilder.com/54/d3/54d32047-3264-4c9b-8394-6354200ab653.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">SPFC Overview – Midphase PDF 1</a></li>
-                                        <li className="pt-2"><a href="https://www.toastmasters.org/magazine/magazine-issues/2019/jan/6-quick-takes-member-moment" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">6 Quick Takes: Member Moment – Toastmasters Magazine</a></li>
+                                        <li className="pt-2"><a href="http://files.midphasesitebuilder.com/54/d3/54d32047-3264-4c9b-8394-6354200ab653.pdf" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Kalyan Sen Receives Fulbright Specialist Award</a></li>
+                                        <li className="pt-2"><a href="https://www.toastmasters.org/magazine/magazine-issues/2019/jan/6-quick-takes-member-moment" target="_blank" className="block text-lg font-medium text-[#0A0A0A] hover:text-[#3B82F6] transition-all duration-200 hover:translate-x-1">Fulbright Scholar Electrifies Audiences – Toastmasters Magazine</a></li>
                                     </ul>
                                 </section>
                             </div>
@@ -517,7 +517,7 @@ export default function App() {
                                         <ul className="list-disc list-inside space-y-2 text-[#9CA3AF] ml-4">
                                             <li><strong>FACTS Pioneer:</strong> Elevated to <strong>IEEE Fellow</strong> for the development and application of power flow control technology, stemming from his work on Flexible Alternating Current Transmission Systems (FACTS) at Westinghouse.</li>
                                             <li><strong>Publications & Patents:</strong> Authored or coauthored over <strong>25 peer-reviewed publications, 8 patents, and 2 books</strong>, including <em>Introduction to FACTS Controllers</em>.</li>
-                                            <li><strong>Global Recognition:</strong> Licensed <strong>Professional Engineer (PE)</strong>. Served as a <strong>Fulbright Specialist</strong> (2017-2022) and an <strong>IEEE PES Distinguished Lecturer</strong> (2002-).</li>
+                                            <li><strong>Global Recognition:</strong> Licensed <strong>Professional Engineer (PE)</strong>. Served as a <strong>Fulbright Specialist</strong> (2017-2022) and an <strong>IEEE PES Distinguished Lecturer</strong> (2002-Present).</li>
                                             <li><strong>Industry Experience:</strong> Over 30 years of engineering and advisory experience with <strong>Westinghouse/Successors</strong> and <strong>ABB</strong>.</li>
                                             <li><strong>IEEE Leadership:</strong> Extensive volunteer service, including AdCom Member of the IEEE Power Electronics Society (PELS) and Chair of the IEEE Pittsburgh Section (awarded "Outstanding Large Section," 2005).</li>
                                         </ul>
