@@ -74,7 +74,7 @@ export default function App() {
                         <img 
                             src="/Logo.png" 
                             alt="Sen Engineering Solutions Logo" 
-                            width={100}        // adjust size as needed
+                            width={100}
                             height={100}
                             className={`
                             w-8 h-8 object-contain
@@ -87,7 +87,7 @@ export default function App() {
                         }`}>Sen Engineering Solutions</span>
                     </div>
 
-                    {/* Desktop Navigation Links */}
+                    {/* Navigation Links */}
                     <nav className="hidden md:flex space-x-6">
                         <a href="#overview-content" className={`transition-all duration-500 font-medium p-2 rounded-md ${
                             scrolled ? 'text-[#374151] hover:text-[#1E3A8A]' : 'text-[#9CA3AF] hover:text-[#3B82F6]'
@@ -130,7 +130,7 @@ export default function App() {
                 </div>
             </header>
 
-            {/* Main content starts here */}
+            {/* Main content */}
             <main className="pt-0">
                 {/* LUXURIOUS LANDING PAGE - Enhanced with gradient fade */}
                 <section id="home" className="relative h-screen w-full flex items-center justify-center text-center bg-gradient-to-b from-[#0A0A0A] via-[#0a0a1a] to-[#111827] overflow-hidden">
@@ -250,7 +250,7 @@ export default function App() {
                         <div className="mb-16">
                             <h3 className="text-4xl font-bold mb-6 text-[#0A0A0A]">Key Benefits</h3>
                             
-                            {/* Modern Chart/Table Display */}
+                            {/* Table Display */}
                             <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100 hover:shadow-[#1E3A8A]/20 transition-shadow duration-300">
                                 {/* Header */}
                                 <div className="grid grid-cols-2 bg-[#1E3A8A] text-[#F9FAFB] font-bold text-xl p-4">
@@ -323,7 +323,7 @@ export default function App() {
                                                 Introduction to FACTS Controllers: Theory, Modeling, and Applications
                                             </a>
                                         </h3>
-                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen | <strong>ISBN:</strong> 9780470478752</p>
+                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen, M. Sen | <strong>ISBN:</strong> 9780470478752</p>
                                         <p className="text-[#374151] text-base">
                                             A comprehensive resource introducing Flexible AC Transmission System (FACTS) controllers, their modeling techniques, and real-world applications. Suitable for students, engineers, and professionals in the power sector.
                                         </p>
@@ -343,7 +343,7 @@ export default function App() {
                                                 Power Flow Control Solutions for a Modern Grid Using SMART Power Flow Controllers
                                             </a>
                                         </h3>
-                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen | <strong>ISBN:</strong> 9781119824381</p>
+                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen, M. Sen | <strong>ISBN:</strong> 9781119824381</p>
                                         <p className="text-[#374151] text-base">
                                             This book presents proven methods for improving grid reliability and efficiency using SMART Power Flow Controllers. It's ideal for grid planners, operators, engineers, and students in modern power systems.
                                         </p>
@@ -356,7 +356,7 @@ export default function App() {
                         {/* Technical Publications & Articles (Grouped Lists) */}
                         <div className="grid lg:grid-cols-2 gap-10 max-w-7xl mx-auto">
                             
-                            {/* Left Column: Technical Publications & Industry */}
+                            {/* Left Column: Technical Publications */}
                             <div className="lg:col-span-1 space-y-10">
                                 <section>
                                     <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Technical Publications (IEEE)</h2>
@@ -386,7 +386,7 @@ export default function App() {
                                 </section>
                             </div>
 
-                            {/* Right Column: ResearchGate & PDF Documents */}
+                            {/* Right Column: Industry Articles & Press Release */}
                             <div className="lg:col-span-1 space-y-10">
                                 <section>
                                     <h2 className="text-3xl font-bold mb-4 text-[#0A0A0A]">Industry Articles</h2>
@@ -422,7 +422,7 @@ export default function App() {
 
                         <div className="space-y-12">
                             
-                            {/* Project Image Placeholder */}
+                            {/* Project Image */}
                             <div className="w-full max-w-3xl mx-auto hover:scale-[1.02] transition-transform duration-300">
                             <Image
                              src="/sentransformer.jpg"
