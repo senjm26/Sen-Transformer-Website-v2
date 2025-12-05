@@ -323,7 +323,8 @@ export default function App() {
                                                 Introduction to FACTS Controllers: Theory, Modeling, and Applications
                                             </a>
                                         </h3>
-                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen, M. Sen | <strong>ISBN:</strong> 9780470478752</p>
+                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen, M. L. Sen</p>
+                                        <p className="text-sm text-[#374151] mb-2"><strong>ISBN:</strong> 9780470478752</p>
                                         <p className="text-[#374151] text-base">
                                             A comprehensive resource introducing Flexible AC Transmission System (FACTS) controllers, their modeling techniques, and real-world applications. Suitable for students, engineers, and professionals in the power sector.
                                         </p>
@@ -343,7 +344,8 @@ export default function App() {
                                                 Power Flow Control Solutions for a Modern Grid Using SMART Power Flow Controllers
                                             </a>
                                         </h3>
-                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen, M. Sen | <strong>ISBN:</strong> 9781119824381</p>
+                                        <p className="text-sm text-[#374151] mb-2"><strong>Author:</strong> K. K. Sen, M. L. Sen</p>
+                                        <p className="text-sm text-[#374151] mb-2"><strong>ISBN:</strong> 9781119824381</p>
                                         <p className="text-[#374151] text-base">
                                             This book presents proven methods for improving grid reliability and efficiency using SMART Power Flow Controllers. It's ideal for grid planners, operators, engineers, and students in modern power systems.
                                         </p>
@@ -517,9 +519,10 @@ export default function App() {
                                         <ul className="list-disc list-inside space-y-2 text-[#9CA3AF] ml-4">
                                             <li><strong>FACTS Pioneer:</strong> Elevated to <strong>IEEE Fellow</strong> for the development and application of power flow control technology, stemming from his work on Flexible Alternating Current Transmission Systems (FACTS) at Westinghouse.</li>
                                             <li><strong>Publications & Patents:</strong> Authored or coauthored over <strong>25 peer-reviewed publications, 8 patents, and 2 books</strong>, including <em>Introduction to FACTS Controllers</em>.</li>
-                                            <li><strong>Global Recognition:</strong> Licensed <strong>Professional Engineer (PE)</strong>. Served as a <strong>Fulbright Specialist</strong> (2017-2022) and an <strong>IEEE PES Distinguished Lecturer</strong> (2002-Present).</li>
+                                            <li><strong>Global Recognition:</strong> Licensed <strong>Professional Engineer (PE)</strong>, in New York and Pennsylvania. Served as a <strong>Fulbright Specialist</strong> (2017-2022), an <strong>IEEE PES Distinguished Lecturer</strong> (2002-Present), and <strong>President Elect (2025-26)</strong> of Society on Social Implications of Technology (SSIT). Recieved <strong>IEEE PES Outstanding Large Chapter Award</strong> (2004), <strong>IEEE IAS Outstanding Large Chapter Award</strong> (2005), and <strong>IEEE PELS Best Chapter Award</strong> (2015)</li>
+                                            <li><strong>IEEE Recognition:</strong> Recipient of the <strong>IEEE Pittsburgh Section Outstanding Volunteer Award</strong> (2004,2023)</li>
+                                            <li><strong>IEEE Leadership:</strong> Extensive volunteer service, including AdCom Member of the IEEE Power Electronics Society (PELS), Chair of the IEEE Pittsburgh Section (awarded "Outstanding Large Section," 2005).</li>
                                             <li><strong>Industry Experience:</strong> Over 30 years of engineering and advisory experience with <strong>Westinghouse/Successors</strong> and <strong>ABB</strong>.</li>
-                                            <li><strong>IEEE Leadership:</strong> Extensive volunteer service, including AdCom Member of the IEEE Power Electronics Society (PELS) and Chair of the IEEE Pittsburgh Section (awarded "Outstanding Large Section," 2005).</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -575,7 +578,8 @@ export default function App() {
                                         <ul className="list-disc list-inside space-y-2 text-[#9CA3AF] ml-4">
                                             <li><strong>Business Leadership:</strong> Served as President of Sen Engineering Solutions, Inc. (2002-2020) and consulted for ABB and Westinghouse.</li>
                                             <li><strong>Technical Contributions:</strong> Coauthored <strong>7 peer-reviewed publications, 5 issued patents, and 2 books</strong> focused on power flow control.</li>
-                                            <li><strong>IEEE Recognition:</strong> Recipient of the <strong>IEEE Pittsburgh Section Power & Energy Society Outstanding Engineer Award</strong> (2018) for service and technical contributions.</li>
+                                            <li><strong>Global Recognition:</strong>Recieved <strong>IEEE PES Outstanding Large Chapter Award</strong> (2008) and <strong>IEEE IAS Outstanding Large Chapter Award</strong> (2010)</li>
+                                            <li><strong>IEEE Recognition:</strong> Recipient of the <strong>IEEE Pittsburgh Section Power & Energy Society Outstanding Engineer Award</strong> (2018) for service and technical contributions and <strong>IEEE Pittsburgh Section Outstanding Volunteer Award</strong>(2023)</li>
                                             <li><strong>Community & Service:</strong> Recognized as a <strong>Distinguished Toastmaster (DTM)</strong>; served in various leadership roles for IEEE Pittsburgh Section/Chapters.</li>
                                         </ul>
                                     </div>
