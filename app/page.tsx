@@ -592,7 +592,7 @@ export default function App() {
 
                 {/* Footer */}
                 <div className="border-t pt-8 border-gray-700 text-center text-[#9CA3AF] py-8 bg-[#111827]">
-                    <p className="text-sm">Sen Engineering Solutions, Inc. &copy; 2025. All rights reserved.</p>
+                    <p className="text-sm">Sen Engineering Solutions, Inc. &copy; 2026. All rights reserved.</p>
                 </div>
 
             </main>
