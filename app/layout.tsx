@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sen Engineering Solutions, Inc.",
   description: "A transformer company specializing in SPFC",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
