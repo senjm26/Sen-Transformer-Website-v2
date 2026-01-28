@@ -625,10 +625,30 @@ export default function App() {
       <div className="w-full max-w-xl bg-[#0F172A] rounded-2xl p-8 shadow-2xl border border-gray-700">
 
         <form
-          action="https://formspree.io/f/mnjdrqwa"
-          method="POST"
-          className="space-y-4"
-        >
+  onSubmit={async (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const res = await fetch("https://formspree.io/f/mnjdrqwa", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (res.ok) {
+      form.reset();
+      alert("Thanks! Your message has been sent.");
+    } else {
+      alert("Oops! Something went wrong. Please try again.");
+    }
+  }}
+  className="space-y-5"
+>
+
           <div>
             <label className="block text-sm text-gray-300 mb-1">Name</label>
             <input
