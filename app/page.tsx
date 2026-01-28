@@ -2,6 +2,26 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from "next/image";
+import { useForm, ValidationError } from "@formspree/react";
+
+function ContactForm() {
+  const [state, handleSubmit] = useForm("mnjdrqwa");
+
+  if (state.succeeded) {
+    return (
+      <div className="bg-[#0F172A] p-8 rounded-2xl text-center border border-gray-700">
+        <h3 className="text-2xl font-bold text-[#3B82F6] mb-2">Message Sent</h3>
+        <p className="text-gray-300">We’ll get back to you shortly.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {/* ... form fields ... */}
+    </form>
+  );
+}
 
 // Main App Component (default export for Next.js app/page.jsx)
 export default function App() {
@@ -465,7 +485,7 @@ export default function App() {
                         <h1 className="text-5xl font-extrabold text-center mb-16 text-[#3B82F6]">Our Leadership Team</h1>
 
                         {/* Leadership Cards Grid */}
-                        <div className="grid lg:grid-cols-2 gap-12">
+                        <div className="grid md:grid-cols-2 gap-12">
                             
                             {/* KKS Card (President & CTO) */}
                             <div className="bg-gray-800 p-8 rounded-xl shadow-2xl border-t-4 border-[#1E3A8A] transition-all duration-300 hover:border-[#3B82F6] hover:-translate-y-1">
@@ -589,6 +609,69 @@ export default function App() {
                     </div>
                 </section>
 
+{/* Contact Section */}
+<section id="contact-section" className="py-24 bg-[#020617] text-[#F9FAFB] border-t border-gray-800">
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
+    <h2 className="text-4xl font-extrabold text-center mb-4 text-[#3B82F6]">
+      Contact Us
+    </h2>
+
+    <p className="text-center text-gray-400 mb-12 max-w-xl mx-auto">
+      Send us a message and we’ll get back to you shortly.
+    </p>
+
+    <div className="flex justify-center">
+      <div className="w-full max-w-xl bg-[#0F172A] rounded-2xl p-8 shadow-2xl border border-gray-700">
+
+        <form
+          action="https://formspree.io/f/mnjdrqwa"
+          method="POST"
+          className="space-y-4"
+        >
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Name</label>
+            <input
+              type="text"
+              name="name"
+              required
+              className="w-full rounded-lg bg-[#020617] border border-gray-700 px-4 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              className="w-full rounded-lg bg-[#020617] border border-gray-700 px-4 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Message</label>
+            <textarea
+              name="message"
+              rows={5}
+              required
+              className="w-full rounded-lg bg-[#020617] border border-gray-700 px-4 py-2 text-white focus:outline-none focus:border-[#3B82F6]"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-[#1E3A8A] hover:bg-[#3B82F6] transition text-white font-bold py-3 rounded-lg shadow-lg"
+          >
+            Send Message
+          </button>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
 
                 {/* Footer */}
                 <div className="border-t pt-8 border-gray-700 text-center text-[#9CA3AF] py-8 bg-[#111827]">
