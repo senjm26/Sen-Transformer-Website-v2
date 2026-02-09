@@ -471,8 +471,12 @@ export default function App() {
                                     A commercial-grade Sen Transformer was designed to operate at <strong>33 kV</strong> with a throughput rating of <strong>±6.5 MVA</strong>. The unit was manufactured and tested to demonstrate the proof of concept. The test results show that the bidirectional active and reactive power flows can be regulated independently, proving that the Sen Transformer is a practical solution to meet utilities' needs in terms of reliability, cost-effectiveness, component non-obsolescence, efficiency, portability and interoperability.
                                 </p>
                                 <p>
-                                    The Sen Transformer is being further tested in a 33 kV radial line at the EPRI lab in the USA.
+                                    The Sen Transformer is being further tested in a 33 kV radial line at the EPRI lab in the USA."
                                 </p>
+                                <a href="https://ampcontrolgroup.com/projects/sen-transformer?utm_campaign=Power%20Infrastructure_FY26&utm_source=linkedin&utm_medium=Ampcontrol&utm_content=Image&utm_term=P%26I_Sen%20Transformer" target="_blank" 
+                                    className="text-center text-[#3B82F6] hover:text-[#1E3A8A] transition duration-300">
+                                    Read the Full Project Overview from Ampcontrol
+                                </a>
                             </div>
 
                         </div>
