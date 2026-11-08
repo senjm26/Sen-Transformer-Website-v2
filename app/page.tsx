@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import Image from "next/image";
 import HeroBackground, { SCENE_BAND } from "./HeroBackground";
+import Logo from "./Logo";
 
 const NAV_LINKS = [
   { href: '#overview-content', label: 'Overview' },
@@ -394,14 +395,8 @@ export default function App() {
                 <div className={`container mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-500 ${
                     scrolled ? 'h-16' : 'h-20'
                 } flex items-center justify-between`}>
-                    <a href="#home" className="flex items-center space-x-3 rounded-md focus-visible:outline-2 focus-visible:outline-[#3B82F6]">
-                        <img
-                            src="/Logo.png"
-                            alt=""
-                            width={100}
-                            height={100}
-                            className="w-8 h-8 object-contain"
-                        />
+                    <a href="#home" className="flex items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-[#3B82F6]">
+                        <Logo className={`w-auto flex-shrink-0 transition-[height] duration-500 ${scrolled ? 'h-12' : 'h-16'}`} />
                         <span className={`text-lg sm:text-xl font-bold tracking-tight transition-colors duration-500 ${
                             scrolled ? 'text-[#0F1B33]' : 'text-white'
                         }`}>Sen Engineering Solutions</span>
@@ -442,7 +437,7 @@ export default function App() {
                 <section id="home" className="relative h-[100svh] min-h-[640px] w-full flex flex-col text-center bg-[radial-gradient(ellipse_at_50%_35%,#10275C_0%,#071330_55%,#050B1E_100%)] overflow-hidden">
                     <HeroBackground paused={wavesPaused} />
 
-                    <div className="relative z-10 flex-1 flex items-center justify-center px-6 pt-24 pb-6">
+                    <div className="relative z-10 flex-1 flex items-center justify-center px-4 sm:px-6 pt-24 pb-6">
                     <div className="max-w-5xl">
                         <h1 className="hero-rise text-[2.6rem] sm:text-6xl lg:text-7xl [@media(min-width:1024px)_and_(max-height:820px)]:text-6xl font-black mb-5 text-white tracking-tighter leading-[1.05]" style={{ animationDelay: '100ms' }}>
                             Sen Engineering Solutions, Inc.
@@ -450,9 +445,9 @@ export default function App() {
                         <p className="hero-rise text-lg sm:text-xl lg:text-2xl text-[#B6C2D9] max-w-3xl mx-auto leading-relaxed" style={{ animationDelay: '300ms' }}>
                             A technology company developing the <strong className="text-white font-semibold">SMART Power Flow Controller</strong> - a functional requirements-based, cost-effective solution.
                         </p>
-                        <div className="hero-rise mt-8 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: '500ms' }}>
-                            <a href="#overview-content" className="px-4 sm:px-6 py-3 text-sm sm:text-base rounded-lg bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">See how it works</a>
-                            <a href="#reading-content" className="px-4 sm:px-6 py-3 text-sm sm:text-base rounded-lg border border-white/25 hover:border-white/60 hover:bg-white/5 text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Read the research</a>
+                        <div className="hero-rise mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3" style={{ animationDelay: '500ms' }}>
+                            <a href="#overview-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">See how it works</a>
+                            <a href="#reading-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg border border-white/25 hover:border-white/60 hover:bg-white/5 text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Read the research</a>
                         </div>
                     </div>
                     </div>
@@ -824,18 +819,20 @@ export default function App() {
 
                 {/* Footer */}
                 <footer className="bg-[#050B1E] text-[#8FA0C2] border-t border-white/5">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        <div className="flex items-center gap-3">
-                            <img src="/Logo.png" alt="" className="w-6 h-6 object-contain" />
-                            <span className="text-white font-semibold">Sen Engineering Solutions, Inc.</span>
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-10">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                            <a href="#" className="flex items-center gap-3 shrink-0">
+                                <Logo className="h-14 w-auto flex-shrink-0" />
+                                <span className="text-white font-semibold whitespace-nowrap">Sen Engineering Solutions, Inc.</span>
+                            </a>
+                            <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm" aria-label="Footer">
+                                {NAV_LINKS.map(link => (
+                                    <a key={link.href} href={link.href} className="whitespace-nowrap hover:text-white transition-colors">{link.label}</a>
+                                ))}
+                                <a href="#contact-section" className="whitespace-nowrap hover:text-white transition-colors">Contact</a>
+                            </nav>
                         </div>
-                        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm" aria-label="Footer">
-                            {NAV_LINKS.map(link => (
-                                <a key={link.href} href={link.href} className="hover:text-white transition-colors">{link.label}</a>
-                            ))}
-                            <a href="#contact-section" className="hover:text-white transition-colors">Contact</a>
-                        </nav>
-                        <p className="text-sm">&copy; {new Date().getFullYear()} Sen Engineering Solutions, Inc. All rights reserved.</p>
+                        <p className="mt-8 pt-6 border-t border-white/5 text-xs text-center text-[#6B7A99]">&copy; {new Date().getFullYear()} Sen Engineering Solutions, Inc. All rights reserved.</p>
                     </div>
                 </footer>
 

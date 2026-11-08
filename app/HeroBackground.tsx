@@ -57,13 +57,17 @@ function makeScene(): Painter {
   const gen = buildPath([140, G - 52], [
     [[410, G - 52], 4], [[520, G - 52], 4], [[652, G - 56], 3], [[688, G - 58], 0], [[700, BUS], 0], [[740, BUS], 0],
   ]);
-  // Line A leaves the sending bus through the SPFC's series unit; line B is the uncontrolled parallel path
+  // Line A leaves the sending bus through the SPFC's series unit; line B is the uncontrolled parallel path.
+  // Each line is carried across the full crossarm (tip to tip) at every tower, then sags to the next one.
+  const across = (y: number, arm: number, sag: number): [Pt, number][] =>
+    TOWERS.flatMap((x, i) => [...(i ? [[[x - arm, y], sag] as [Pt, number]] : []), [[x + arm, y], 0] as [Pt, number]]);
+  // Line A dips through the SPFC's series windings: in one bushing, through the tank, out another
   const circuitA = buildPath([745, BUS], [
-    [[745, G - 58], 0], [[800, G - 58], 0], [[840, LOW], 0],
-    [[1020, LOW], 16], [[1200, LOW], 16], [[1380, LOW], 16], [[1460, LOW], 0], [[1505, BUS], 0],
+    [[745, G - 72], 0], [[745, G - 30], 0], [[784, G - 30], 0], [[784, G - 72], 0], [[840, LOW], 0],
+    ...across(LOW, 40, 12), [[1505, BUS], 0],
   ]);
   const circuitB = buildPath([745, BUS], [
-    [[790, BUS], 0], [[846, UP], 0], [[1026, UP], 16], [[1206, UP], 16], [[1386, UP], 16], [[1454, UP], 0], [[1520, BUS], 0],
+    [[775, BUS], 0], [[846, UP], 0], ...across(UP, 34, 12), [[1520, BUS], 0],
   ]);
   const dist = buildPath([1590, BUS], [
     [[1612, G - 58], 0], [[1640, G - 58], 0], [[1680, G - 95], 0], [[1760, G - 95], 6], [[1840, G - 95], 6], [[1900, G - 95], 5],
@@ -205,22 +209,30 @@ function makeScene(): Painter {
     lw(1.2); stroke(BLUE, 0.5); ctx.beginPath();
     [140, 410, 520].forEach(x => { line(x, G, x, G - 56); line(x - 8, G - 52, x + 8, G - 52); });
     ctx.stroke();
-    const transformer = (x: number, wdt: number, highlight = 0) => {
-      stroke(highlight ? SKY : BLUE, highlight ? 0.95 : 0.65); lw(highlight ? 1.8 : 1.4);
+    // oil-filled power transformer: tank with a radiator bank on each side
+    const transformer = (x: number, wdt: number) => {
+      stroke(BLUE, 0.65); lw(1.4);
       ctx.beginPath();
-      ctx.rect(x, G - 48, wdt, 48);
-      for (let fx = x + 8; fx < x + wdt - 4; fx += 8) line(fx, G - 40, fx, G - 8);
+      ctx.rect(x + 8, G - 48, wdt - 16, 48);
+      for (const rx of [x, x + wdt - 8]) { ctx.rect(rx, G - 40, 8, 32); line(rx + 4, G - 40, rx + 4, G - 8); }
+      ctx.stroke();
+    };
+    // porcelain bushings on the tank lid
+    const bushings = (xs: number[]) => {
+      ctx.beginPath();
+      xs.forEach(x => { line(x, G - 48, x, G - 58); line(x - 3, G - 51, x + 3, G - 51); line(x - 3, G - 54, x + 3, G - 54); });
       ctx.stroke();
     };
     transformer(640, 60);
-    lw(1.4); stroke(BLUE, 0.65); ctx.beginPath(); [652, 675, 688].forEach(x => line(x, G - 48, x, G - 58)); ctx.stroke();
+    bushings([652, 675, 688]);
 
     // substation buses: sending end (left) and receiving end (right)
-    const bus = (x0: number, x1: number) => {
-      lw(1.2); stroke(BLUE, 0.6); ctx.beginPath(); line(x0 + 8, G, x0 + 8, BUS); line(x1 - 8, G, x1 - 8, BUS); ctx.stroke();
+    const bus = (x0: number, x1: number, legs = [x0 + 8, x1 - 8]) => {
+      lw(1.2); stroke(BLUE, 0.6); ctx.beginPath(); legs.forEach(x => line(x, G, x, BUS)); ctx.stroke();
       lw(3); stroke(SKY, 0.55); ctx.beginPath(); line(x0, BUS, x1, BUS); ctx.stroke();
     };
-    bus(692, 790);
+    // the sending bus stops short of the SPFC's outgoing bushing; its supports stand clear of the unit
+    bus(692, 775, [700, 722]);
     bus(1495, 1600);
 
     // transmission towers
@@ -237,31 +249,25 @@ function makeScene(): Painter {
       ctx.stroke();
     });
 
-    // the SPFC pushes power into or out of line A; the rest of the transfer takes parallel line B
-    const shareA = 0.5 + 0.3 * Math.sin(t * 0.35);
-    const working = Math.abs(shareA - 0.5) / 0.3;
+    // the SPFC's load tap changers step power into or out of line A; the rest of the transfer takes parallel line B
+    const tap = Math.round(8 * Math.sin(t * 0.35));
+    const shareA = 0.5 + 0.3 * (tap / 8);
+    const working = Math.abs(tap) / 8;
     lw(1.2 + shareA * 1.6); stroke(BLUE, 0.3 + shareA * 0.5); tracePath(circuitA);
     lw(1.2 + (1 - shareA) * 1.6); stroke(BLUE, 0.3 + (1 - shareA) * 0.5); tracePath(circuitB);
     lw(1.2); stroke(BLUE, 0.55); tracePath(gen); tracePath(dist);
 
-    // SPFC at the sending substation: series unit in line A, exciter connected in shunt to the bus
+    // SPFC (Sen Transformer) at the sending substation: one transformer tank, no power electronics.
+    // Its exciter winding is in shunt with the bus; its compensating windings sit in series with line A,
+    // and load tap changers select the injected voltage.
     const glow = ctx.createRadialGradient(770, G - 30, 0, 770, G - 30, 95);
     glow.addColorStop(0, `rgba(${BLUE},${0.15 + working * 0.25})`);
     glow.addColorStop(1, `rgba(${BLUE},0)`);
     ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(770, G - 30, 95, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "rgba(7,19,48,0.9)"; ctx.fillRect(728, G - 48, 84, 48);
-    transformer(728, 84, 1);
-    ctx.beginPath(); line(745, G - 48, 745, G - 58); line(800, G - 48, 800, G - 58); ctx.stroke();
-    lw(1.2); stroke(SKY, 0.7); ctx.setLineDash([4 / s, 4 / s]);
-    ctx.beginPath(); line(770, BUS, 770, G - 48); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = `rgba(${SKY},0.9)`;
-    ctx.font = `600 ${12 / s}px Inter, system-ui, sans-serif`;
-    ctx.textAlign = "center";
-    ctx.fillText("SMART Power Flow Controller", 770, G + 20 / s);
 
     // step-down transformer and distribution
     transformer(1600, 50);
-    lw(1.4); stroke(BLUE, 0.65); ctx.beginPath(); [1612, 1625, 1640].forEach(x => line(x, G - 48, x, G - 58)); ctx.stroke();
+    bushings([1612, 1625, 1640]);
     lw(1.2); stroke(BLUE, 0.55); ctx.beginPath();
     [1680, 1760, 1840].forEach(x => { line(x, G, x, G - 98); line(x - 10, G - 95, x + 10, G - 95); });
     ctx.stroke();
@@ -306,6 +312,197 @@ function makeScene(): Painter {
     pulses(circuitB, 6, 0.06, 1 - shareA);
     pulses(dist, 3, 0.11, 0.8);
 
+    // The SPFC itself, front view, drawn over line A so its pulses vanish into the windings and reappear.
+    // Tank on a skid, radiator banks, shed bushings, conservator drum, and the tap changer's control cabinet.
+    ctx.fillStyle = "rgba(7,19,48,0.97)"; ctx.fillRect(728, G - 52, 84, 52);
+    stroke(SKY, 0.95); lw(1.8); ctx.beginPath();
+    ctx.rect(736, G - 52, 68, 48); ctx.rect(732, G - 4, 76, 4);
+    for (const rx of [728, 804]) { ctx.rect(rx, G - 44, 8, 36); line(rx + 4, G - 44, rx + 4, G - 8); }
+    ctx.stroke();
+    lw(1); stroke(SKY, 0.55); ctx.beginPath(); ctx.rect(740, G - 46, 26, 36);
+    for (let fx = 742.5; fx < 766; fx += 2.5) line(fx, G - 44, fx, G - 12);
+    ctx.stroke();
+    // bushings: series in, exciter (shunt), series out
+    lw(1.4); stroke(SKY, 0.9); ctx.beginPath();
+    [745, 765, 784].forEach(x => {
+      line(x, G - 52, x, G - 72);
+      for (let y = G - 55; y > G - 72; y -= 3) line(x - 3.5, y, x + 3.5, y);
+    });
+    ctx.stroke();
+    // exciter lead from the bus
+    lw(1.4); stroke(SKY, 0.7); ctx.beginPath(); line(765, BUS, 765, G - 72); ctx.stroke();
+    // conservator drum on its bracket, seen end-on
+    stroke(SKY, 0.9); lw(1.4); ctx.beginPath();
+    line(798, G - 52, 801, G - 70); line(812, G - 52, 811, G - 70); line(804, G - 52, 812, G - 52);
+    ctx.stroke();
+    ctx.fillStyle = "rgba(7,19,48,0.97)"; ctx.beginPath(); ctx.arc(806, G - 78, 10, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    lw(0.9); ctx.beginPath(); ctx.arc(806, G - 78, 7, 0, Math.PI * 2); ctx.stroke();
+    // control cabinet; its window shows the tap position
+    lw(1.4); ctx.beginPath(); ctx.rect(772, G - 42, 26, 30); ctx.moveTo(791, G - 31); ctx.arc(785, G - 31, 6, 0, Math.PI * 2); ctx.stroke();
+    const needle = -Math.PI / 2 + (tap / 8) * Math.PI * 0.75;
+    lw(1.6); ctx.beginPath(); line(785, G - 31, 785 + Math.cos(needle) * 5, G - 31 + Math.sin(needle) * 5); ctx.stroke();
+    ctx.fillStyle = `rgba(${SKY},0.9)`;
+    ctx.font = `600 ${12 / s}px Inter, system-ui, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.fillText("SMART Power Flow Controller", 770, G + 20 / s);
+
+    ctx.restore();
+  };
+}
+
+/* Phone version: the same story recomposed for a narrow screen. Generation, the sending
+   substation with the SPFC, one span of the two parallel lines, and a home at the far end.
+   Fewer elements and plain dots for the pulses, so it stays smooth on phones. */
+function makeMobileScene(): Painter {
+  const VW = 490, G = 300, TH = 170;
+  const TOWERS = [245, 335];
+  const UP = G - 145, LOW = G - 115, BUS = G - 60;
+
+  const gen = buildPath([30, G - 40], [[[100, G - 40], 3], [[120, G - 46], 0], [[128, BUS], 0], [[150, BUS], 0]]);
+  // Line A goes through the SPFC's series unit; line B is the parallel path that bypasses it
+  const circuitA = buildPath([150, BUS], [
+    [[150, G - 52], 0], [[150, G - 22], 0], [[180, G - 22], 0], [[180, G - 52], 0], [[215, LOW], 0], [[275, LOW], 0], [[305, LOW], 8], [[365, LOW], 0], [[392, BUS], 0],
+  ]);
+  const circuitB = buildPath([150, BUS], [
+    [[171, BUS], 0], [[219, UP], 0], [[271, UP], 0], [[309, UP], 8], [[361, UP], 0], [[404, BUS], 0],
+  ]);
+  const dist = buildPath([412, BUS], [[[420, G - 46], 0], [[445, G - 46], 0], [[458, G - 30], 0]]);
+
+  return (ctx, w, h, t) => {
+    const band = sceneBand(h);
+    // a little side padding so the turbine blades aren't clipped at the screen edge
+    const s = Math.min(w / (VW + 28), (band - CONTROLS_STRIP - 10) / (TH + 5));
+    const ox = (w - VW * s) / 2;
+    ctx.save();
+    ctx.translate(ox, h - CONTROLS_STRIP - G * s);
+    ctx.scale(s, s);
+    const lw = (px: number) => (ctx.lineWidth = px / s);
+    const stroke = (rgb: string, a: number) => (ctx.strokeStyle = `rgba(${rgb},${a})`);
+    const line = (x1: number, y1: number, x2: number, y2: number) => { ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); };
+    const tracePath = (p: Path) => { ctx.beginPath(); p.pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.stroke(); };
+    // power transformer: tank with a radiator bank on each side
+    const box = (x: number, wdt: number, ht: number, rgb: string, a: number) => {
+      ctx.fillStyle = "rgba(7,19,48,0.9)"; ctx.fillRect(x + 6, G - ht, wdt - 12, ht);
+      stroke(rgb, a); ctx.beginPath(); ctx.rect(x + 6, G - ht, wdt - 12, ht);
+      for (const rx of [x, x + wdt - 6]) { ctx.rect(rx, G - ht + 7, 6, ht - 12); line(rx + 3, G - ht + 7, rx + 3, G - 5); }
+      ctx.stroke();
+    };
+
+    // hills and ground
+    ctx.fillStyle = `rgba(${BLUE},0.06)`;
+    ctx.beginPath(); ctx.moveTo(-600, G);
+    for (let x = -600; x <= VW + 600; x += 30) ctx.lineTo(x, G - 45 - 22 * Math.sin(x / 140) - 10 * Math.sin(x / 53 + 1));
+    ctx.lineTo(VW + 600, G); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "rgba(5,11,30,0.55)"; ctx.fillRect(-600, G, VW + 1200, 400);
+    lw(1); stroke(BLUE, 0.4); ctx.beginPath(); line(-600, G, VW + 600, G); ctx.stroke();
+
+    // wind turbine
+    lw(1.3); stroke(BLUE, 0.6); ctx.beginPath(); line(15, G, 17, G - 110); line(21, G, 19, G - 110); ctx.stroke();
+    stroke(SKY, 0.8); ctx.beginPath();
+    for (let b = 0; b < 3; b++) { const a = t * 0.9 + (b * Math.PI * 2) / 3; line(18, G - 110, 18 + Math.cos(a) * 28, G - 110 + Math.sin(a) * 28); }
+    ctx.stroke();
+
+    // cooling tower with steam
+    lw(1.3); stroke(BLUE, 0.6); ctx.beginPath();
+    ctx.moveTo(38, G); ctx.quadraticCurveTo(62, G - 55, 52, G - 92);
+    ctx.moveTo(98, G); ctx.quadraticCurveTo(74, G - 55, 84, G - 92);
+    line(52, G - 92, 84, G - 92);
+    ctx.stroke();
+    for (let i = 0; i < 4; i++) {
+      const k = (t * 0.07 + i / 4) % 1;
+      ctx.fillStyle = `rgba(${SKY},${0.16 * (1 - k)})`;
+      ctx.beginPath(); ctx.arc(68 + k * 25, G - 98 - k * 60, 8 + k * 16, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // step-up transformer and sending bus
+    lw(1.3); box(98, 36, 40, BLUE, 0.65);
+    stroke(BLUE, 0.65); ctx.beginPath(); [106, 116, 126].forEach(x => line(x, G - 40, x, G - 46)); ctx.stroke();
+    lw(1.1); stroke(BLUE, 0.6); ctx.beginPath(); line(132, G, 132, BUS); line(137, G, 137, BUS); ctx.stroke();
+    lw(2.5); stroke(SKY, 0.55); ctx.beginPath(); line(126, BUS, 171, BUS); ctx.stroke();
+
+    // towers
+    TOWERS.forEach(x => {
+      lw(1.3); stroke(BLUE, 0.6); ctx.beginPath();
+      line(x - 20, G, x - 5, G - TH); line(x + 20, G, x + 5, G - TH);
+      line(x - 26, UP, x + 26, UP); line(x - 30, LOW, x + 30, LOW);
+      const segs = 6;
+      for (let i = 0; i < segs; i++) {
+        const y0 = G - (TH * i) / segs, y1 = G - (TH * (i + 1)) / segs;
+        const w0 = 20 - 15 * (i / segs), w1 = 20 - 15 * ((i + 1) / segs);
+        line(x - w0, y0, x + w1, y1); line(x + w0, y0, x - w1, y1);
+      }
+      ctx.stroke();
+    });
+
+    // the two parallel lines, brightness following how the SPFC's tap changers share the power
+    const tap = Math.round(8 * Math.sin(t * 0.35));
+    const shareA = 0.5 + 0.3 * (tap / 8);
+    const working = Math.abs(tap) / 8;
+    lw(1.1 + shareA * 1.5); stroke(BLUE, 0.3 + shareA * 0.5); tracePath(circuitA);
+    lw(1.1 + (1 - shareA) * 1.5); stroke(BLUE, 0.3 + (1 - shareA) * 0.5); tracePath(circuitB);
+    lw(1.1); stroke(BLUE, 0.55); tracePath(gen); tracePath(dist);
+
+    // SPFC (Sen Transformer): one tank, exciter in shunt with the bus, compensating windings in series with line A
+    const glow = ctx.createRadialGradient(169, G - 22, 0, 169, G - 22, 55);
+    glow.addColorStop(0, `rgba(${BLUE},${0.15 + working * 0.25})`);
+    glow.addColorStop(1, `rgba(${BLUE},0)`);
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(169, G - 22, 55, 0, Math.PI * 2); ctx.fill();
+
+    // receiving bus, step-down transformer and a home
+    lw(1.1); stroke(BLUE, 0.6); ctx.beginPath(); line(390, G, 390, BUS); line(408, G, 408, BUS); ctx.stroke();
+    lw(2.5); stroke(SKY, 0.55); ctx.beginPath(); line(386, BUS, 414, BUS); ctx.stroke();
+    lw(1.3); box(414, 30, 40, BLUE, 0.65);
+    stroke(BLUE, 0.65); ctx.beginPath();
+    ctx.moveTo(452, G); ctx.lineTo(452, G - 28); ctx.lineTo(468, G - 42); ctx.lineTo(484, G - 28); ctx.lineTo(484, G);
+    ctx.stroke();
+    ctx.fillStyle = `rgba(${WARM},${0.6 + 0.3 * Math.sin(t * 0.7)})`; ctx.fillRect(458, G - 20, 8, 8);
+    ctx.fillStyle = `rgba(${WARM},${0.6 + 0.3 * Math.sin(t * 0.7 + 2)})`; ctx.fillRect(471, G - 20, 8, 8);
+
+    // power pulses as plain dots
+    const pulses = (path: Path, n: number, speed: number, strength: number) => {
+      for (let i = 0; i < n; i++) {
+        const p = (t * speed + i / n) % 1;
+        for (let j = 2; j >= 0; j--) {
+          const [x, y] = pointAt(path, p - j * 0.012);
+          ctx.fillStyle = `rgba(${SKY},${(j ? 0.3 : 0.95) * (0.35 + strength * 0.65)})`;
+          ctx.beginPath(); ctx.arc(x, y, (j ? 1.6 : 3) * (0.7 + strength * 0.5), 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    };
+    pulses(gen, 3, 0.12, 0.8);
+    pulses(circuitA, 4, 0.08, shareA);
+    pulses(circuitB, 4, 0.08, 1 - shareA);
+    pulses(dist, 2, 0.2, 0.8);
+
+    // the SPFC, front view, drawn over line A so its pulses pass through the windings out of sight
+    ctx.fillStyle = "rgba(7,19,48,0.97)"; ctx.fillRect(140, G - 40, 58, 40);
+    stroke(SKY, 0.95); lw(1.6); ctx.beginPath();
+    ctx.rect(146, G - 40, 46, 37); ctx.rect(143, G - 3, 52, 3);
+    for (const rx of [140, 192]) { ctx.rect(rx, G - 33, 6, 26); line(rx + 3, G - 33, rx + 3, G - 7); }
+    ctx.stroke();
+    lw(0.9); stroke(SKY, 0.55); ctx.beginPath(); ctx.rect(149, G - 35, 15, 26);
+    for (let fx = 151.5; fx < 164; fx += 2.5) line(fx, G - 33, fx, G - 11);
+    ctx.stroke();
+    // bushings: series in, exciter (shunt), series out
+    lw(1.2); stroke(SKY, 0.9); ctx.beginPath();
+    [150, 165, 180].forEach(x => {
+      line(x, G - 40, x, G - 52);
+      for (let y = G - 43; y > G - 52; y -= 3) line(x - 2.5, y, x + 2.5, y);
+    });
+    line(165, BUS, 165, G - 52);
+    ctx.stroke();
+    // conservator drum on its bracket
+    lw(1.2); ctx.beginPath(); line(186, G - 40, 187, G - 46); line(194, G - 40, 193, G - 46); ctx.stroke();
+    ctx.fillStyle = "rgba(7,19,48,0.97)"; ctx.beginPath(); ctx.arc(190, G - 51, 6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    // control cabinet; its window shows the tap position
+    ctx.beginPath(); ctx.rect(168, G - 33, 18, 22); ctx.moveTo(181.5, G - 24); ctx.arc(177, G - 24, 4.5, 0, Math.PI * 2); ctx.stroke();
+    const needle = -Math.PI / 2 + (tap / 8) * Math.PI * 0.75;
+    lw(1.4); ctx.beginPath(); line(177, G - 24, 177 + Math.cos(needle) * 3.5, G - 24 + Math.sin(needle) * 3.5); ctx.stroke();
+    ctx.fillStyle = `rgba(${SKY},0.9)`;
+    ctx.font = `600 ${12 / s}px Inter, system-ui, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.fillText("SMART Power Flow Controller", 169, G + 20 / s);
+
     ctx.restore();
   };
 }
@@ -328,10 +525,11 @@ export default function HeroBackground({ paused }: { paused: boolean }) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const painter = makeScene();
+    const desktop = makeScene(), phone = makeMobileScene();
+    const isPhone = () => w < 640;
     // Reduced motion keeps the scene alive, just much slower
     const speed = reduced ? 0.2 : 1;
-    let w = 0, h = 0, raf = 0, last = 0;
+    let w = 0, h = 0, raf = 0, last = 0, visible = true;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -342,21 +540,32 @@ export default function HeroBackground({ paused }: { paused: boolean }) {
     };
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
-      painter(ctx, w, h, timeRef.current);
+      (isPhone() ? phone : desktop)(ctx, w, h, timeRef.current);
     };
     const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
+      // Phones redraw at about 30fps to save battery
+      if (isPhone() && last && now - last < 30) return;
       const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
       last = now;
       timeRef.current += dt * speed;
       draw();
-      raf = requestAnimationFrame(frame);
     };
+    const start = () => { if (!raf && !paused && visible) { last = 0; raf = requestAnimationFrame(frame); } };
+    const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+
+    // Only animate while the hero is on screen
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) start(); else stop();
+    });
+    io.observe(canvas);
 
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
     resize();
-    if (!paused) raf = requestAnimationFrame(frame);
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+    start();
+    return () => { stop(); ro.disconnect(); io.disconnect(); };
   }, [paused, reduced]);
 
   return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />;
