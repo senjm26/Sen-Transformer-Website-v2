@@ -15,6 +15,8 @@ const NAV_LINKS = [
 const BOOKS = [
   {
     cover: '/book1.jpg',
+    width: 629,
+    height: 1000,
     title: 'Introduction to FACTS Controllers: Theory, Modeling, and Applications',
     isbn: '9780470478752',
     url: 'https://www.wiley.com/en-us/Introduction+to+FACTS+Controllers%3A+Theory%2C+Modeling%2C+and+Applications-p-9780470478752',
@@ -22,6 +24,8 @@ const BOOKS = [
   },
   {
     cover: '/book2.jpg',
+    width: 473,
+    height: 690,
     title: 'Power Flow Control Solutions for a Modern Grid Using SMART Power Flow Controllers',
     isbn: '9781119824381',
     url: 'https://www.wiley.com/en-us/Power+Flow+Control+Solutions+for+a+Modern+Grid+Using+SMART+Power+Flow+Controllers-p-9781119824381',
@@ -77,7 +81,8 @@ type Leader = {
   credentials: string;
   title: string;
   photo: string;
-  initials: string;
+  photoWidth: number;
+  photoHeight: number;
   role: string;
   emails: string[];
   education: { degree: string; school: string; year: string }[];
@@ -90,7 +95,8 @@ const LEADERS: Leader[] = [
     credentials: 'PhD-EE, PE, MBA, IEEE Fellow',
     title: 'President & Chief Technology Officer',
     photo: '/kks.jpg',
-    initials: 'KKS',
+    photoWidth: 1822,
+    photoHeight: 1920,
     role: 'Directs all aspects of the company, including R&D/Engineering, Sales and Marketing, Manufacturing, Quality Assurance, and Finance.',
     emails: ['senkk@sentransformer.com', 'senkk@ieee.org'],
     education: [
@@ -113,7 +119,8 @@ const LEADERS: Leader[] = [
     credentials: 'MEE, IEEE Member',
     title: 'Chief Operating Officer',
     photo: '/mls.jpg',
-    initials: 'MLS',
+    photoWidth: 1820,
+    photoHeight: 2140,
     role: 'Responsible for performing the everyday operations of the company, ensuring efficiency and project execution.',
     emails: ['senml@sentransformer.com', 'senml@ieee.org'],
     education: [
@@ -148,7 +155,7 @@ function ReadingHeading({ title, count }: { title: string; count: number }) {
     <h3 className="flex items-center gap-4 mb-6 text-2xl font-bold text-[#0F1B33]">
       <span>{title}</span>
       <span className="h-px flex-grow bg-[#CBD5E1]" aria-hidden="true" />
-      <span className="text-sm font-semibold text-[#64748B] tabular-nums">{count}</span>
+      <span className="text-sm font-semibold text-[#475569] tabular-nums">{count}</span>
     </h3>
   );
 }
@@ -293,7 +300,7 @@ function ContactForm() {
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <button type="submit" disabled={status === 'sending'}
-          className="bg-[#3B82F6] hover:bg-[#2563EB] disabled:opacity-60 disabled:cursor-wait text-white font-semibold px-6 py-3 rounded-lg transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          className="bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-60 disabled:cursor-wait text-white font-semibold px-6 py-3 rounded-lg transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           {status === 'sending' ? 'Sending…' : 'Send message'}
         </button>
         <p aria-live="polite" className={`text-sm ${status === 'error' ? 'text-[#FCA5A5]' : 'text-[#93C5FD]'}`}>
@@ -406,7 +413,7 @@ export default function App() {
                         {NAV_LINKS.map(link => (
                             <a key={link.href} href={link.href} className={navLinkClass}>{link.label}</a>
                         ))}
-                        <a href="#contact-section" className="ml-3 font-semibold px-4 py-2 rounded-lg bg-[#3B82F6] text-white hover:bg-[#2563EB] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">Contact us</a>
+                        <a href="#contact-section" className="ml-3 font-semibold px-4 py-2 rounded-lg bg-[#2563EB] text-white hover:bg-[#1D4ED8] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">Contact us</a>
                     </nav>
 
                     <button
@@ -428,7 +435,7 @@ export default function App() {
                             scrolled ? 'text-[#334155] hover:bg-[#F1F5F9]' : 'text-[#B6C2D9] hover:bg-white/5 hover:text-white'
                         }`}>{link.label}</a>
                     ))}
-                    <a onClick={() => setIsMenuOpen(false)} href="#contact-section" className="block py-3 px-4 text-white bg-[#3B82F6] hover:bg-[#2563EB] font-semibold">Contact us</a>
+                    <a onClick={() => setIsMenuOpen(false)} href="#contact-section" className="block py-3 px-4 text-white bg-[#2563EB] hover:bg-[#1D4ED8] font-semibold">Contact us</a>
                 </div>
             </header>
 
@@ -446,7 +453,7 @@ export default function App() {
                             A technology company developing the <strong className="text-white font-semibold">SMART Power Flow Controller</strong> - a functional requirements-based, cost-effective solution.
                         </p>
                         <div className="hero-rise mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3" style={{ animationDelay: '500ms' }}>
-                            <a href="#overview-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">See how it works</a>
+                            <a href="#overview-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">See how it works</a>
                             <a href="#reading-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg border border-white/25 hover:border-white/60 hover:bg-white/5 text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Read the research</a>
                         </div>
                     </div>
@@ -486,19 +493,22 @@ export default function App() {
                 <section id="overview-content" className="py-16 sm:py-24 bg-[#F9FAFB] text-[#0A0A0A]">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
                         
-                        <h2 className="text-5xl font-extrabold text-center mb-6 text-[#1E3A8A] animate-fade-in-up">SMART Power Flow Controller - Empowering the Grid</h2>
+                        <h2 className="text-5xl font-extrabold text-center mb-6 text-[#1E3A8A]">SMART Power Flow Controller - Empowering the Grid</h2>
                         
                         {/* Introduction */}
-                        <div className="mb-16 text-center animate-fade-in-up">
+                        <div className="mb-16 text-center">
                             <p className="text-xl text-[#374151] leading-relaxed mb-8">
                                 <strong>SMART Power Flow Controller</strong> is a breakthrough in bulk power system technology, hosting a range of benefits over traditional power flow solutions. SMART Power Flow Controller, a patented technology, acts as an Impedance Regulating Transformer and offers a plethora of power flow control features independent active and reactive power flows, voltage, phase angle, Impedance (XL or XC and R or –R, all independently variable) in one, multi-use unit to provide a reliable, cost‐effective, and portable solution to meet today's needs to modernize the grid.
                             </p>
 
                             {/* Product Image Suggestion Placement */}
                             <div className="my-10 p-6 bg-gray-200 rounded-xl shadow-inner border border-gray-300 hover:shadow-xl transition-shadow duration-300">
-                                <img 
-                                    src="/smart power flow.jpg" 
-                                    alt="SMART Power Flow Controller Product Image" 
+                                <Image
+                                    src="/smart power flow.jpg"
+                                    alt="SMART Power Flow Controller Product Image"
+                                    width={929}
+                                    height={585}
+                                    sizes="(min-width: 1024px) 976px, 100vw"
                                     className="w-full h-auto rounded-lg shadow-lg mx-auto"
                                 />
                             </div>
@@ -523,7 +533,7 @@ export default function App() {
                             </p>
                             
                             {/* Read More Toggle Button */}
-                            <button onClick={() => setIsExpanded(!isExpanded)} className="flex items-center text-lg font-semibold text-[#3B82F6] hover:text-[#1E3A8A] transition-all duration-300 hover:translate-x-1">
+                            <button onClick={() => setIsExpanded(!isExpanded)} className="flex items-center text-lg font-semibold text-[#2563EB] hover:text-[#1E3A8A] transition-all duration-300 hover:translate-x-1">
                                 <span>{isExpanded ? 'Show Less' : 'Read More'}</span>
                                 <svg className={`w-5 h-5 ml-2 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
@@ -541,23 +551,23 @@ export default function App() {
                                 <h5 className="text-xl font-bold text-[#1E3A8A] mb-4">Functional Principles (S.M.A.R.T.)</h5>
                                 <ul className="space-y-3 text-lg text-[#374151] list-none p-0">
                                     <li className="flex items-start">
-                                        <span className="font-bold text-[#3B82F6] mr-3 whitespace-nowrap">S - Specific:</span> 
+                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">S - Specific:</span> 
                                         <span>Meets the actual needs of utilities</span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="font-bold text-[#3B82F6] mr-3 whitespace-nowrap">M - Measurable:</span> 
+                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">M - Measurable:</span> 
                                         <span>Reliable, efficient, cost-effective, and portable</span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="font-bold text-[#3B82F6] mr-3 whitespace-nowrap">A - Attainable:</span> 
+                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">A - Attainable:</span> 
                                         <span>Built for realistic grid performance expectations</span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="font-bold text-[#3B82F6] mr-3 whitespace-nowrap">R - Relevant:</span> 
+                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">R - Relevant:</span> 
                                         <span>Improves overall grid efficiency and resilience</span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="font-bold text-[#3B82F6] mr-3 whitespace-nowrap">T - Time-Bound:</span> 
+                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">T - Time-Bound:</span> 
                                         <span>Delivered with defined milestones</span>
                                     </li>
                                 </ul>
@@ -619,7 +629,7 @@ export default function App() {
                                     <article key={book.isbn} data-reveal style={{ transitionDelay: `${i * 120}ms` }}
                                         className="book-card flex flex-col sm:flex-row gap-6 bg-white rounded-2xl p-6 border border-[#D9E0EA] shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
                                         <a href={book.url} target="_blank" rel="noopener noreferrer" tabIndex={-1} className="flex-shrink-0 self-center sm:self-start">
-                                            <img src={book.cover} alt={`Cover of ${book.title}`} className="book-cover w-36 sm:w-32 lg:w-36 h-auto rounded-md" />
+                                            <Image src={book.cover} alt={`Cover of ${book.title}`} width={book.width} height={book.height} sizes="144px" className="book-cover w-36 sm:w-32 lg:w-36 h-auto rounded-md" />
                                         </a>
                                         <div className="flex flex-col">
                                             <h4 className="text-xl font-bold leading-snug text-[#0F1B33]">{book.title}</h4>
@@ -669,8 +679,9 @@ export default function App() {
                             <Image
                                 src="/sentransformer.jpg"
                                 alt="The commercial-grade Sen Transformer unit after testing"
-                                width={1200}
-                                height={900}
+                                width={1202}
+                                height={1297}
+                                sizes="(min-width: 768px) 768px, 100vw"
                                 className="rounded-2xl object-cover w-full h-auto border border-white/10"
                             />
                             <figcaption className="mt-3 text-sm text-[#8FA0C2] text-center">The successfully tested commercial-grade Sen Transformer unit.</figcaption>
@@ -738,15 +749,13 @@ export default function App() {
                                 <article key={person.name} data-reveal style={{ transitionDelay: `${i * 120}ms` }}
                                     className="bg-white rounded-2xl border border-[#D9E0EA] p-6 sm:p-8 shadow-[0_20px_40px_-30px_rgba(15,27,51,0.45)]">
                                     <header className="flex flex-col items-center text-center gap-5">
-                                        <img
+                                        <Image
                                             src={person.photo}
                                             alt={`Portrait of ${person.name}`}
+                                            width={person.photoWidth}
+                                            height={person.photoHeight}
+                                            sizes="200px"
                                             className="h-44 sm:h-52 w-auto max-w-full rounded-2xl flex-shrink-0 bg-[#E2E8F0]"
-                                            onError={(e) => {
-                                                const img = e.currentTarget as HTMLImageElement;
-                                                img.onerror = null;
-                                                img.src = `https://placehold.co/200x200/1E3A8A/F9FAFB?text=${person.initials}`;
-                                            }}
                                         />
                                         <div>
                                             <h3 className="text-2xl sm:text-[1.7rem] font-extrabold leading-tight">{person.name}</h3>
@@ -832,28 +841,11 @@ export default function App() {
                                 <a href="#contact-section" className="whitespace-nowrap hover:text-white transition-colors">Contact</a>
                             </nav>
                         </div>
-                        <p className="mt-8 pt-6 border-t border-white/5 text-xs text-center text-[#6B7A99]">&copy; {new Date().getFullYear()} Sen Engineering Solutions, Inc. All rights reserved.</p>
+                        <p className="mt-8 pt-6 border-t border-white/5 text-xs text-center text-[#8FA0C2]">&copy; {new Date().getFullYear()} Sen Engineering Solutions, Inc. All rights reserved.</p>
                     </div>
                 </footer>
 
             </main>
-
-            <style jsx>{`
-                @keyframes fade-in-up {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                .animate-fade-in-up {
-                    animation: fade-in-up 1s ease-out;
-                }
-            `}</style>
         </div>
     );
 }

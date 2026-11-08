@@ -529,7 +529,7 @@ export default function HeroBackground({ paused }: { paused: boolean }) {
     const isPhone = () => w < 640;
     // Reduced motion keeps the scene alive, just much slower
     const speed = reduced ? 0.2 : 1;
-    let w = 0, h = 0, raf = 0, last = 0, visible = true;
+    let w = 0, h = 0, raf = 0, last = 0, visible = true, ready = false;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -551,7 +551,7 @@ export default function HeroBackground({ paused }: { paused: boolean }) {
       timeRef.current += dt * speed;
       draw();
     };
-    const start = () => { if (!raf && !paused && visible) { last = 0; raf = requestAnimationFrame(frame); } };
+    const start = () => { if (!raf && ready && !paused && visible) { last = 0; raf = requestAnimationFrame(frame); } };
     const stop = () => { cancelAnimationFrame(raf); raf = 0; };
 
     // Only animate while the hero is on screen
@@ -564,8 +564,16 @@ export default function HeroBackground({ paused }: { paused: boolean }) {
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
     resize();
-    start();
-    return () => { stop(); ro.disconnect(); io.disconnect(); };
+    // Show the first frame right away, but only start animating once the page has finished loading
+    // and the browser is idle, so the animation doesn't compete with the initial load
+    const begin = () => { ready = true; start(); };
+    // Safari before 18 has no requestIdleCallback
+    const hasIdle = typeof window.requestIdleCallback === "function";
+    const idle = hasIdle ? requestIdleCallback(begin, { timeout: 2000 }) : window.setTimeout(begin, 1000);
+    return () => {
+      if (hasIdle) cancelIdleCallback(idle); else window.clearTimeout(idle);
+      stop(); ro.disconnect(); io.disconnect();
+    };
   }, [paused, reduced]);
 
   return <canvas ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />;
