@@ -203,7 +203,7 @@ const BENEFITS = [
   ['Grid optimization', 'Harnesses the dormant capacity of underutilized lines, raising their power flows up to the lines’ thermal limits'],
   ['Congestion relief', 'Holds the power flow in a line at its design limit instead of tripping the line, which could start a cascading failure of the grid'],
   ['Cost reduction', 'A quicker, cheaper alternative to building new high-voltage transmission lines, a long and costly process'],
-  ['Data center supply', 'Helps deliver the large, time-varying power that modern data centers draw'],
+  ['Data center supply', 'Helps deliver the large amount of power on a certain corridor that modern data centers draw'],
   ['Flexibility', 'Portable and easily redeployed as grid demands evolve'],
   ['Interoperability', 'Works with components from various suppliers to reduce maintenance and lifecycle costs'],
 ];
@@ -592,7 +592,7 @@ export default function App() {
 
                             <ComparisonTable />
 
-                            <h4 className="mt-14 mb-5 text-2xl font-bold text-[#0A0A0A]">What utilities gain</h4>
+                            <h4 className="mt-14 mb-5 text-2xl font-bold text-[#0A0A0A]">What utilities gain by using Sen Transformer</h4>
                             <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
                                 {BENEFITS.map(([title, text]) => (
                                     <div key={title} className="border-t-2 border-[#1E3A8A] pt-3">
