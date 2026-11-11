@@ -230,7 +230,25 @@ function ComparisonTable() {
   return (
     // on wide screens the table extends past the text column so the cells wrap less
     <div className="xl:-mx-16">
-      <div className="overflow-x-auto rounded-2xl border border-[#D9E0EA] bg-white shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
+      {/* relative keeps the absolutely positioned screen-reader labels inside the scroll box; without it they widen the whole page on phones */}
+      {/* Phones: one card per capability, so all three products are readable without sideways scrolling */}
+      <div className="sm:hidden space-y-3">
+        {COMPARISON.map(row => (
+          <div key={row.feature} className="relative rounded-xl border border-[#D9E0EA] bg-white p-4 shadow-[0_12px_24px_-20px_rgba(15,27,51,0.45)]">
+            <h5 className="text-[15px] font-semibold leading-snug text-[#0F1B33]">{row.feature}</h5>
+            <dl className="mt-3 space-y-1.5 text-sm leading-snug">
+              {row.cells.map(([level, text], i) => (
+                <div key={i} className={`grid grid-cols-[7rem_1fr] gap-3 rounded-lg px-2.5 py-2 ${i === 0 ? 'bg-[#EEF3FC]' : ''}`}>
+                  <dt className={i === 0 ? 'font-semibold text-[#1E3A8A]' : 'text-[#64748B]'}>{COMPETITORS[i]}</dt>
+                  <dd className={`flex gap-2 ${i === 0 ? 'font-medium text-[#0F1B33]' : 'text-[#475569]'}`}><LevelIcon level={level} /><span>{text}</span></dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden sm:block relative overflow-x-auto rounded-2xl border border-[#D9E0EA] bg-white shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
         <table className="w-full min-w-[760px] table-fixed border-collapse text-left">
           <caption className="sr-only">Comparison of the Sen Transformer with the UPFC and the phase angle regulator</caption>
           {/* the highlighted Sen Transformer column has the longest answers, so it gets the most room after the labels */}
