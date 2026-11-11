@@ -182,7 +182,7 @@ function ResourceGrid({ items, single = false }: { items: { title: string; sourc
 type Level = 'yes' | 'partial' | 'no';
 type Cell = [Level, string];
 
-const COMPETITORS = ['Sen Transformer', 'UPFC', 'Phase angle regulator'];
+const COMPETITORS = ['Sen Transformer (SPFC)', 'UPFC', 'Phase angle regulator'];
 
 const COMPARISON: { feature: string; cells: [Cell, Cell, Cell] }[] = [
   { feature: 'Independent active power control', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'No']] },
@@ -203,7 +203,7 @@ const BENEFITS = [
   ['Grid optimization', 'Harnesses the dormant capacity of underutilized lines, raising their power flows up to the lines’ thermal limits'],
   ['Congestion relief', 'Holds the power flow in a line at its design limit instead of tripping the line, which could start a cascading failure of the grid'],
   ['Cost reduction', 'A quicker, cheaper alternative to building new high-voltage transmission lines, a long and costly process'],
-  ['Data center supply', 'Helps deliver the large amount of power on a certain corridor that modern data centers draw'],
+  ['Data center supply', 'Helps deliver the large amount of power, on a certain corridor, that modern data centers draw'],
   ['Flexibility', 'Portable and easily redeployed as grid demands evolve'],
   ['Interoperability', 'Works with components from various suppliers to reduce maintenance and lifecycle costs'],
 ];
@@ -228,14 +228,17 @@ const LevelIcon = ({ level }: { level: Level }) => {
 
 function ComparisonTable() {
   return (
-    <div>
+    // on wide screens the table extends past the text column so the cells wrap less
+    <div className="xl:-mx-16">
       <div className="overflow-x-auto rounded-2xl border border-[#D9E0EA] bg-white shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
-        <table className="w-full min-w-[720px] table-fixed border-collapse text-left">
+        <table className="w-full min-w-[760px] table-fixed border-collapse text-left">
           <caption className="sr-only">Comparison of the Sen Transformer with the UPFC and the phase angle regulator</caption>
-          {/* capability labels get a little more room; the three products share the rest equally */}
+          {/* the highlighted Sen Transformer column has the longest answers, so it gets the most room after the labels */}
           <colgroup>
-            <col className="w-[31%]" />
-            {COMPETITORS.map(name => <col key={name} className="w-[23%]" />)}
+            <col className="w-[28%]" />
+            <col className="w-[28%]" />
+            <col className="w-[22%]" />
+            <col className="w-[22%]" />
           </colgroup>
           <thead>
             <tr>
@@ -606,7 +609,7 @@ export default function App() {
                             <div className="mt-10 p-6 bg-[#3B82F6]/10 rounded-xl border border-[#3B82F6]/30 shadow-md hover:shadow-xl transition-shadow duration-300">
                                 <h4 className="text-2xl font-bold text-[#1E3A8A] mb-2">The Result</h4>
                                 <p className="text-lg text-[#374151]">
-                                    A more intelligent, reliable, and sustainable power grid - built around functional principles rather than rigid technologies. The SPFC enables utilities to do more with existing infrastructure, ensuring a smarter, cleaner, and future-ready energy system.
+                                    A more intelligent, reliable, and sustainable power grid - built around functional requirements rather than rigid technologies. The SPFC enables utilities to do more with existing infrastructure, ensuring a smarter, cleaner, and future-ready energy system.
                                 </p>
                             </div>
                         </div>
