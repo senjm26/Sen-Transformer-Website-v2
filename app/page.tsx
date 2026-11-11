@@ -189,10 +189,10 @@ const COMPARISON: { feature: string; cells: [Cell, Cell, Cell] }[] = [
   { feature: 'Independent reactive power control', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'No']] },
   { feature: 'Voltage regulation', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'No']] },
   { feature: 'Phase angle regulation', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['yes', 'Yes']] },
-  { feature: 'Impedance regulation (XL or XC, R or -R)', cells: [['yes', 'All independently variable'], ['yes', 'Through converter control'], ['no', 'Fixed']] },
-  { feature: 'Built from proven transformer and tap-changer parts', cells: [['yes', 'Yes'], ['no', 'Voltage-sourced converters'], ['yes', 'Yes']] },
+  { feature: 'Impedance regulation (XL or XC, R or -R)', cells: [['yes', 'All independently variable'], ['yes', 'All independently variable'], ['no', 'Fixed']] },
+  { feature: 'Built from proven transformer and tap-changer technology', cells: [['yes', 'Yes'], ['no', 'Voltage-sourced converters'], ['yes', 'Yes']] },
   { feature: 'Response time', cells: [['partial', 'Seconds, enough for most utility needs'], ['yes', 'Milliseconds'], ['partial', 'Seconds']] },
-  { feature: 'Cost', cells: [['yes', 'A fraction of power electronics; comparable to phase angle regulator'], ['no', 'Highest of the three'], ['yes', 'Lower']] },
+  { feature: 'Cost', cells: [['yes', 'A fraction of power electronics; comparable to phase angle regulator'], ['no', 'Highest of the three'], ['yes', 'Lowest of the three']] },
   { feature: 'Portable and redeployable', cells: [['yes', 'Yes'], ['no', 'No'], ['yes', 'Yes']] },
   { feature: 'Component availability over decades', cells: [['yes', 'Long-lived components'], ['no', 'Electronics become obsolete'], ['yes', 'Long-lived components']] },
 ];
