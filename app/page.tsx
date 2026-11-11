@@ -182,18 +182,19 @@ function ResourceGrid({ items, single = false }: { items: { title: string; sourc
 type Level = 'yes' | 'partial' | 'no';
 type Cell = [Level, string];
 
-const COMPETITORS = ['SMART Power Flow Controller', 'UPFC (Westinghouse)', 'Phase angle regulator'];
+const COMPETITORS = ['Sen Transformer', 'UPFC', 'Phase angle regulator'];
 
 const COMPARISON: { feature: string; cells: [Cell, Cell, Cell] }[] = [
-  { feature: 'Independent active power control', cells: [['yes', 'Independent'], ['yes', 'Independent'], ['partial', 'Tied to reactive power']] },
-  { feature: 'Independent reactive power control', cells: [['yes', 'Independent'], ['yes', 'Independent'], ['no', 'Not controllable']] },
-  { feature: 'Voltage regulation', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'Phase angle only']] },
+  { feature: 'Independent active power control', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'No']] },
+  { feature: 'Independent reactive power control', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'No']] },
+  { feature: 'Voltage regulation', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['no', 'No']] },
+  { feature: 'Phase angle regulation', cells: [['yes', 'Yes'], ['yes', 'Yes'], ['yes', 'Yes']] },
   { feature: 'Impedance regulation (XL or XC, R or -R)', cells: [['yes', 'All independently variable'], ['yes', 'Through converter control'], ['no', 'Fixed']] },
   { feature: 'Built from proven transformer and tap-changer parts', cells: [['yes', 'Yes'], ['no', 'Voltage-sourced converters'], ['yes', 'Yes']] },
   { feature: 'Response time', cells: [['partial', 'Seconds, enough for most utility needs'], ['yes', 'Milliseconds'], ['partial', 'Seconds']] },
-  { feature: 'Cost', cells: [['yes', 'A fraction of power electronics'], ['no', 'Highest of the three'], ['yes', 'Lower']] },
-  { feature: 'Portable and redeployable', cells: [['yes', 'Yes'], ['partial', 'Typically fixed'], ['partial', 'Typically fixed']] },
-  { feature: 'Component availability over the years', cells: [['yes', 'Long-lived components'], ['partial', 'Electronics age faster'], ['yes', 'Long-lived components']] },
+  { feature: 'Cost', cells: [['yes', 'A fraction of power electronics; comparable to phase angle regulator'], ['no', 'Highest of the three'], ['yes', 'Lower']] },
+  { feature: 'Portable and redeployable', cells: [['yes', 'Yes'], ['no', 'No'], ['yes', 'Yes']] },
+  { feature: 'Component availability over decades', cells: [['yes', 'Long-lived components'], ['no', 'Electronics become obsolete'], ['yes', 'Long-lived components']] },
 ];
 
 const BENEFITS = [
@@ -228,7 +229,7 @@ function ComparisonTable() {
     <div>
       <div className="overflow-x-auto rounded-2xl border border-[#D9E0EA] bg-white shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
         <table className="w-full min-w-[720px] border-collapse text-left">
-          <caption className="sr-only">Comparison of the SMART Power Flow Controller with the UPFC and the phase angle regulator</caption>
+          <caption className="sr-only">Comparison of the Sen Transformer with the UPFC and the phase angle regulator</caption>
           <thead>
             <tr>
               <th scope="col" className="w-[28%] p-4 text-sm font-medium text-[#64748B] align-bottom">Capability</th>
