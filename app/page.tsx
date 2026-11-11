@@ -199,9 +199,11 @@ const COMPARISON: { feature: string; cells: [Cell, Cell, Cell] }[] = [
 
 const BENEFITS = [
   ['Efficiency', 'Reduces reactive power and energy losses in generators, transformers, and lines'],
-  ['Sustainability', 'Cuts unnecessary generation and lowers environmental impact'],
-  ['Grid optimization', 'Redirects power to underutilized lines, reducing congestion'],
-  ['Cost reduction', 'Defers or eliminates the need for new high-voltage transmission lines'],
+  ['Sustainability', 'Cuts unnecessary generation to provide the line loss and lowers environmental impact'],
+  ['Grid optimization', 'Harnesses the dormant capacity of underutilized lines, raising their power flows up to the lines’ thermal limits'],
+  ['Congestion relief', 'Holds the power flow in a line at its design limit instead of tripping the line, which could start a cascading failure of the grid'],
+  ['Cost reduction', 'A quicker, cheaper alternative to building new high-voltage transmission lines, a long and costly process'],
+  ['Data center supply', 'Helps deliver the large, time-varying power that modern data centers draw'],
   ['Flexibility', 'Portable and easily redeployed as grid demands evolve'],
   ['Interoperability', 'Works with components from various suppliers to reduce maintenance and lifecycle costs'],
 ];
@@ -228,22 +230,27 @@ function ComparisonTable() {
   return (
     <div>
       <div className="overflow-x-auto rounded-2xl border border-[#D9E0EA] bg-white shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
-        <table className="w-full min-w-[720px] border-collapse text-left">
+        <table className="w-full min-w-[720px] table-fixed border-collapse text-left">
           <caption className="sr-only">Comparison of the Sen Transformer with the UPFC and the phase angle regulator</caption>
+          {/* capability labels get a little more room; the three products share the rest equally */}
+          <colgroup>
+            <col className="w-[31%]" />
+            {COMPETITORS.map(name => <col key={name} className="w-[23%]" />)}
+          </colgroup>
           <thead>
             <tr>
-              <th scope="col" className="w-[28%] p-4 text-sm font-medium text-[#64748B] align-bottom">Capability</th>
+              <th scope="col" className="px-5 py-4 text-xs font-semibold uppercase tracking-wider text-[#64748B] align-bottom">Capability</th>
               {COMPETITORS.map((name, i) => (
-                <th key={name} scope="col" className={`p-4 align-bottom text-base font-bold ${i === 0 ? 'bg-[#1E3A8A] text-white rounded-t-xl' : 'text-[#0F1B33]'}`}>{name}</th>
+                <th key={name} scope="col" className={`px-5 py-4 align-bottom text-base font-bold ${i === 0 ? 'bg-[#1E3A8A] text-white rounded-t-xl' : 'text-[#0F1B33]'}`}>{name}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {COMPARISON.map(row => (
+            {COMPARISON.map((row, r) => (
               <tr key={row.feature} className="border-t border-[#E6EBF2]">
-                <th scope="row" className="p-4 text-[15px] font-semibold text-[#0F1B33] align-top">{row.feature}</th>
+                <th scope="row" className="px-5 py-3.5 text-[15px] leading-snug font-semibold text-[#0F1B33] align-middle">{row.feature}</th>
                 {row.cells.map(([level, text], i) => (
-                  <td key={i} className={`p-4 align-top text-[15px] ${i === 0 ? 'bg-[#EEF3FC] text-[#0F1B33] font-medium' : 'text-[#475569]'}`}>
+                  <td key={i} className={`px-5 py-3.5 align-middle text-[15px] leading-snug ${i === 0 ? 'bg-[#EEF3FC] text-[#0F1B33] font-medium' : 'text-[#475569]'} ${i === 0 && r === COMPARISON.length - 1 ? 'rounded-b-xl' : ''}`}>
                     <span className="flex gap-2.5"><LevelIcon level={level} /><span>{text}</span></span>
                   </td>
                 ))}
@@ -586,7 +593,7 @@ export default function App() {
                             <ComparisonTable />
 
                             <h4 className="mt-14 mb-5 text-2xl font-bold text-[#0A0A0A]">What utilities gain</h4>
-                            <dl className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                            <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
                                 {BENEFITS.map(([title, text]) => (
                                     <div key={title} className="border-t-2 border-[#1E3A8A] pt-3">
                                         <dt className="font-semibold text-[#0A0A0A]">{title}</dt>
