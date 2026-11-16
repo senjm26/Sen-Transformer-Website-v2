@@ -14,8 +14,8 @@ type Ctx = CanvasRenderingContext2D;
 type Painter = (ctx: Ctx, w: number, h: number, t: number) => void;
 
 /* The "Empowering the Grid" diagram drawn as a living line-art landscape.
-   Generation on the left, transmission across the middle with the SPFC on one circuit,
-   homes and industry on the right. The SPFC keeps shifting power between the two circuits. */
+   Generation on the left, transmission across the middle through the SPFC,
+   homes and industry on the right. The SPFC keeps stepping the power on the line up and down. */
 type Pt = [number, number];
 type Path = { pts: Pt[]; cum: number[]; len: number };
 
@@ -50,28 +50,26 @@ function pointAt(path: Path, p: number): Pt {
 function makeScene(): Painter {
   const VW = 1900, G = 300;
   const TOWERS = [880, 1060, 1240, 1420];
-  const UP = G - 185, LOW = G - 150;
-  // Substation buses at each end of the two parallel lines
+  const LOW = G - 150;
+  // Substation buses at each end of the line
   const BUS = G - 80;
 
-  const gen = buildPath([140, G - 52], [
-    [[410, G - 52], 4], [[520, G - 52], 4], [[652, G - 56], 3], [[688, G - 58], 0], [[700, BUS], 0], [[740, BUS], 0],
-  ]);
-  // Line A leaves the sending bus through the SPFC's series unit; line B is the uncontrolled parallel path.
-  // Each line is carried across the full crossarm (tip to tip) at every tower, then sags to the next one.
+  // Transformers are fed on one bushing and send power out from another; the windings link the two inside the tank.
+  // The collector line lands on the step-up's low-voltage bushing, and its high-voltage bushing feeds the bus.
+  const gen = buildPath([140, G - 52], [[[410, G - 52], 4], [[520, G - 52], 4], [[652, G - 58], 3]]);
+  const genHV = buildPath([688, G - 58], [[[700, BUS], 0], [[740, BUS], 0]]);
+  // The line leaves the sending bus through the SPFC's series unit.
+  // It is carried across the full crossarm (tip to tip) at every tower, then sags to the next one.
   const across = (y: number, arm: number, sag: number): [Pt, number][] =>
     TOWERS.flatMap((x, i) => [...(i ? [[[x - arm, y], sag] as [Pt, number]] : []), [[x + arm, y], 0] as [Pt, number]]);
-  // Line A dips through the SPFC's series windings: in one bushing, through the tank, out another
+  // The line dips through the SPFC's series windings: in one bushing, through the tank, out another
   const circuitA = buildPath([745, BUS], [
     [[745, G - 72], 0], [[745, G - 30], 0], [[784, G - 30], 0], [[784, G - 72], 0], [[840, LOW], 0],
     ...across(LOW, 40, 12), [[1505, BUS], 0],
   ]);
-  const circuitB = buildPath([745, BUS], [
-    [[775, BUS], 0], [[846, UP], 0], ...across(UP, 34, 12), [[1520, BUS], 0],
-  ]);
-  const dist = buildPath([1590, BUS], [
-    [[1612, G - 58], 0], [[1640, G - 58], 0], [[1680, G - 95], 0], [[1760, G - 95], 6], [[1840, G - 95], 6], [[1900, G - 95], 5],
-  ]);
+  // The receiving bus feeds the step-down's high-voltage bushing; distribution leaves from its low-voltage bushing
+  const distHV = buildPath([1590, BUS], [[[1612, G - 58], 0]]);
+  const dist = buildPath([1640, G - 58], [[[1680, G - 95], 0], [[1760, G - 95], 6], [[1840, G - 95], 6], [[1900, G - 95], 5]]);
 
   const windows: Pt[] = [
     [1672, G - 22], [1692, G - 22], [1737, G - 22], [1757, G - 22],
@@ -232,14 +230,14 @@ function makeScene(): Painter {
       lw(3); stroke(SKY, 0.55); ctx.beginPath(); line(x0, BUS, x1, BUS); ctx.stroke();
     };
     // the sending bus stops short of the SPFC's outgoing bushing; its supports stand clear of the unit
-    bus(692, 775, [700, 722]);
+    bus(692, 768, [700, 722]);
     bus(1495, 1600);
 
     // transmission towers
     TOWERS.forEach(x => {
       lw(1.4); stroke(BLUE, 0.6); ctx.beginPath();
       line(x - 26, G, x - 6, G - 215); line(x + 26, G, x + 6, G - 215);
-      line(x - 34, UP, x + 34, UP); line(x - 40, LOW, x + 40, LOW);
+      line(x - 40, LOW, x + 40, LOW);
       const segs = 7;
       for (let i = 0; i < segs; i++) {
         const y0 = G - (215 * i) / segs, y1 = G - (215 * (i + 1)) / segs;
@@ -249,16 +247,15 @@ function makeScene(): Painter {
       ctx.stroke();
     });
 
-    // the SPFC's load tap changers step power into or out of line A; the rest of the transfer takes parallel line B
+    // the SPFC's load tap changers step the power on the line up and down
     const tap = Math.round(8 * Math.sin(t * 0.35));
     const shareA = 0.5 + 0.3 * (tap / 8);
     const working = Math.abs(tap) / 8;
     lw(1.2 + shareA * 1.6); stroke(BLUE, 0.3 + shareA * 0.5); tracePath(circuitA);
-    lw(1.2 + (1 - shareA) * 1.6); stroke(BLUE, 0.3 + (1 - shareA) * 0.5); tracePath(circuitB);
-    lw(1.2); stroke(BLUE, 0.55); tracePath(gen); tracePath(dist);
+    lw(1.2); stroke(BLUE, 0.55); [gen, genHV, distHV, dist].forEach(tracePath);
 
     // SPFC (Sen Transformer) at the sending substation: one transformer tank, no power electronics.
-    // Its exciter winding is in shunt with the bus; its compensating windings sit in series with line A,
+    // Its exciter winding is in shunt with the bus; its compensating windings sit in series with the line,
     // and load tap changers select the injected voltage.
     const glow = ctx.createRadialGradient(770, G - 30, 0, 770, G - 30, 95);
     glow.addColorStop(0, `rgba(${BLUE},${0.15 + working * 0.25})`);
@@ -307,12 +304,12 @@ function makeScene(): Painter {
         }
       }
     };
-    pulses(gen, 5, 0.09, 0.8);
+    pulses(gen, 5, 0.1, 0.8);
+    pulses(genHV, 1, 0.8, 0.8);
     pulses(circuitA, 6, 0.06, shareA);
-    pulses(circuitB, 6, 0.06, 1 - shareA);
-    pulses(dist, 3, 0.11, 0.8);
+    pulses(dist, 3, 0.14, 0.8);
 
-    // The SPFC itself, front view, drawn over line A so its pulses vanish into the windings and reappear.
+    // The SPFC itself, front view, drawn over the line so its pulses vanish into the windings and reappear.
     // Tank on a skid, radiator banks, shed bushings, conservator drum, and the tap changer's control cabinet.
     ctx.fillStyle = "rgba(7,19,48,0.97)"; ctx.fillRect(728, G - 52, 84, 52);
     stroke(SKY, 0.95); lw(1.8); ctx.beginPath();
@@ -351,22 +348,22 @@ function makeScene(): Painter {
 }
 
 /* Phone version: the same story recomposed for a narrow screen. Generation, the sending
-   substation with the SPFC, one span of the two parallel lines, and a home at the far end.
+   substation with the SPFC, one span of the line, and a home at the far end.
    Fewer elements and plain dots for the pulses, so it stays smooth on phones. */
 function makeMobileScene(): Painter {
   const VW = 490, G = 300, TH = 170;
   const TOWERS = [245, 335];
-  const UP = G - 145, LOW = G - 115, BUS = G - 60;
+  const LOW = G - 115, BUS = G - 60;
 
-  const gen = buildPath([30, G - 40], [[[100, G - 40], 3], [[120, G - 46], 0], [[128, BUS], 0], [[150, BUS], 0]]);
-  // Line A goes through the SPFC's series unit; line B is the parallel path that bypasses it
+  // Each transformer is fed on one bushing and sends power out from another
+  const gen = buildPath([30, G - 40], [[[106, G - 46], 3]]);
+  const genHV = buildPath([126, G - 46], [[[128, BUS], 0], [[150, BUS], 0]]);
+  // The line goes through the SPFC's series unit
   const circuitA = buildPath([150, BUS], [
     [[150, G - 52], 0], [[150, G - 22], 0], [[180, G - 22], 0], [[180, G - 52], 0], [[215, LOW], 0], [[275, LOW], 0], [[305, LOW], 8], [[365, LOW], 0], [[392, BUS], 0],
   ]);
-  const circuitB = buildPath([150, BUS], [
-    [[171, BUS], 0], [[219, UP], 0], [[271, UP], 0], [[309, UP], 8], [[361, UP], 0], [[404, BUS], 0],
-  ]);
-  const dist = buildPath([412, BUS], [[[420, G - 46], 0], [[445, G - 46], 0], [[458, G - 30], 0]]);
+  const distHV = buildPath([412, BUS], [[[423, G - 46], 0]]);
+  const dist = buildPath([435, G - 46], [[[458, G - 30], 0]]);
 
   return (ctx, w, h, t) => {
     const band = sceneBand(h);
@@ -418,13 +415,13 @@ function makeMobileScene(): Painter {
     lw(1.3); box(98, 36, 40, BLUE, 0.65);
     stroke(BLUE, 0.65); ctx.beginPath(); [106, 116, 126].forEach(x => line(x, G - 40, x, G - 46)); ctx.stroke();
     lw(1.1); stroke(BLUE, 0.6); ctx.beginPath(); line(132, G, 132, BUS); line(137, G, 137, BUS); ctx.stroke();
-    lw(2.5); stroke(SKY, 0.55); ctx.beginPath(); line(126, BUS, 171, BUS); ctx.stroke();
+    lw(2.5); stroke(SKY, 0.55); ctx.beginPath(); line(126, BUS, 168, BUS); ctx.stroke();
 
     // towers
     TOWERS.forEach(x => {
       lw(1.3); stroke(BLUE, 0.6); ctx.beginPath();
       line(x - 20, G, x - 5, G - TH); line(x + 20, G, x + 5, G - TH);
-      line(x - 26, UP, x + 26, UP); line(x - 30, LOW, x + 30, LOW);
+      line(x - 30, LOW, x + 30, LOW);
       const segs = 6;
       for (let i = 0; i < segs; i++) {
         const y0 = G - (TH * i) / segs, y1 = G - (TH * (i + 1)) / segs;
@@ -434,15 +431,14 @@ function makeMobileScene(): Painter {
       ctx.stroke();
     });
 
-    // the two parallel lines, brightness following how the SPFC's tap changers share the power
+    // the line, brightness following the power the SPFC's tap changers push onto it
     const tap = Math.round(8 * Math.sin(t * 0.35));
     const shareA = 0.5 + 0.3 * (tap / 8);
     const working = Math.abs(tap) / 8;
     lw(1.1 + shareA * 1.5); stroke(BLUE, 0.3 + shareA * 0.5); tracePath(circuitA);
-    lw(1.1 + (1 - shareA) * 1.5); stroke(BLUE, 0.3 + (1 - shareA) * 0.5); tracePath(circuitB);
-    lw(1.1); stroke(BLUE, 0.55); tracePath(gen); tracePath(dist);
+    lw(1.1); stroke(BLUE, 0.55); [gen, genHV, distHV, dist].forEach(tracePath);
 
-    // SPFC (Sen Transformer): one tank, exciter in shunt with the bus, compensating windings in series with line A
+    // SPFC (Sen Transformer): one tank, exciter in shunt with the bus, compensating windings in series with the line
     const glow = ctx.createRadialGradient(169, G - 22, 0, 169, G - 22, 55);
     glow.addColorStop(0, `rgba(${BLUE},${0.15 + working * 0.25})`);
     glow.addColorStop(1, `rgba(${BLUE},0)`);
@@ -452,7 +448,8 @@ function makeMobileScene(): Painter {
     lw(1.1); stroke(BLUE, 0.6); ctx.beginPath(); line(390, G, 390, BUS); line(408, G, 408, BUS); ctx.stroke();
     lw(2.5); stroke(SKY, 0.55); ctx.beginPath(); line(386, BUS, 414, BUS); ctx.stroke();
     lw(1.3); box(414, 30, 40, BLUE, 0.65);
-    stroke(BLUE, 0.65); ctx.beginPath();
+    stroke(BLUE, 0.65); ctx.beginPath(); [423, 435].forEach(x => line(x, G - 40, x, G - 46)); ctx.stroke();
+    ctx.beginPath();
     ctx.moveTo(452, G); ctx.lineTo(452, G - 28); ctx.lineTo(468, G - 42); ctx.lineTo(484, G - 28); ctx.lineTo(484, G);
     ctx.stroke();
     ctx.fillStyle = `rgba(${WARM},${0.6 + 0.3 * Math.sin(t * 0.7)})`; ctx.fillRect(458, G - 20, 8, 8);
@@ -469,12 +466,12 @@ function makeMobileScene(): Painter {
         }
       }
     };
-    pulses(gen, 3, 0.12, 0.8);
+    pulses(gen, 3, 0.15, 0.8);
+    pulses(genHV, 1, 0.4, 0.8);
     pulses(circuitA, 4, 0.08, shareA);
-    pulses(circuitB, 4, 0.08, 1 - shareA);
-    pulses(dist, 2, 0.2, 0.8);
+    pulses(dist, 1, 0.4, 0.8);
 
-    // the SPFC, front view, drawn over line A so its pulses pass through the windings out of sight
+    // the SPFC, front view, drawn over the line so its pulses pass through the windings out of sight
     ctx.fillStyle = "rgba(7,19,48,0.97)"; ctx.fillRect(140, G - 40, 58, 40);
     stroke(SKY, 0.95); lw(1.6); ctx.beginPath();
     ctx.rect(146, G - 40, 46, 37); ctx.rect(143, G - 3, 52, 3);
