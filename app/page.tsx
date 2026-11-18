@@ -6,10 +6,47 @@ import HeroBackground, { SCENE_BAND } from "./HeroBackground";
 import Logo from "./Logo";
 
 const NAV_LINKS = [
-  { href: '#overview-content', label: 'Overview' },
-  { href: '#reading-content', label: 'Reading' },
-  { href: '#projects-content', label: 'Projects' },
+  { href: '#overview-content', label: 'Technology' },
+  { href: '#comparison', label: 'Comparison' },
+  { href: '#projects-content', label: 'Tested unit' },
+  { href: '#reading-content', label: 'Research' },
   { href: '#leadership', label: 'Leadership' },
+];
+
+// Company summary shown right under the hero
+const PROOF = [
+  ['Since 2002', 'Developing power flow control technology for utilities'],
+  ['30+ years', 'Of engineering and advisory experience with Westinghouse and ABB'],
+  ['8 patents', 'Issued for power flow control technology'],
+  ['25+ papers', 'Peer-reviewed publications, plus 2 books published by Wiley'],
+];
+
+// Logos shown in one tone under the proof points; height is the rendered height in px, tuned so they look the same size
+const PARTNERS = [
+  { name: 'Ampcontrol', role: 'built the commercial-grade unit', logo: '/partners/ampcontrol.png', width: 209, height: 67, shown: 40 },
+  { name: 'EPRI', role: 'testing on a 33 kV radial line', logo: '/partners/epri.svg', width: 90, height: 18.28, shown: 24 },
+  { name: 'New York Power Authority', role: 'co-funded development', logo: '/partners/nypa.svg', width: 250, height: 55.68, shown: 36 },
+  { name: 'IEEE', role: 'publisher of the peer-reviewed papers', logo: '/partners/ieee.svg', width: 61.61, height: 20.5, shown: 30 },
+  { name: 'Wiley', role: 'publisher of the books', logo: '/partners/wiley.svg', width: 680, height: 144, shown: 24 },
+];
+
+const VISION_MISSION = [
+  ['Our vision', 'To serve society by delivering advanced power‑flow control technology.'],
+  ['Our mission', 'Through publications, tutorials, seminars, and webinars, we educate customers, enabling them to define functional requirements and obtain cost‑effective solutions.'],
+];
+
+const HOW_IT_WORKS = [
+  ['Regulates line impedance', 'The SPFC acts as an impedance-regulating transformer, dynamically adjusting both resistance and reactance in a transmission line.'],
+  ['Controls each power flow on its own', 'Active and reactive power flows are controlled independently, maximizing useful active power and minimizing unwanted reactive power.'],
+  ['Built for what utilities need', 'Power electronics react in milliseconds, but most utility applications only need response times of seconds or longer. Meeting that real requirement delivers high performance at a fraction of the cost of power electronics solutions.'],
+];
+
+const SMART = [
+  ['S', 'Specific', 'Meets the actual needs of utilities'],
+  ['M', 'Measurable', 'Reliable, efficient, cost-effective, and portable'],
+  ['A', 'Attainable', 'Built for realistic grid performance expectations'],
+  ['R', 'Relevant', 'Improves overall grid efficiency and resilience'],
+  ['T', 'Time-bound', 'Delivered with defined milestones'],
 ];
 
 const BOOKS = [
@@ -58,12 +95,12 @@ const INDUSTRY_ARTICLES = [
   { title: 'Practical Power Flow Controller Brings Benefits Of Power Electronics To The Grid', source: 'How2Power', url: 'https://www.how2power.com/pdf_view.php?url=/newsletters/1503/articles/H2PToday1503_design_Sen.pdf' },
   { title: 'Phase Angle Regulation Versus Impedance Regulation: Which Offers Greater Control Of Power Flow On the Grid?', source: 'How2Power', url: 'https://www.how2power.com/pdf_view.php?url=/newsletters/1702/articles/H2PToday1702_design_Sen.pdf' },
   { title: 'Modeling Of The Sen Transformer Using An Electromagnetic Transients Program', source: 'How2Power', url: 'https://www.how2power.com/pdf_view.php?url=/newsletters/1803/articles/H2PToday1803_design_Sen.pdf' },
-  { title: 'Modeling of the Sen Transformer in PSS®E', source: 'PDF', url: 'http://files.midphasesitebuilder.com/ad/33/ad335f60-d07b-4b8b-a9a3-ef0b6ab450ee.pdf' },
+  { title: 'Modeling of the Sen Transformer in PSS®E', source: 'PDF', url: '/docs/modeling-sen-transformer-psse.pdf' },
 ];
 
 const PRESS = [
   { title: 'NYPA Energy Innovator News Brief', source: 'NYPA press release', url: 'https://www.nypa.gov/news/press-releases/2021/20211028-transformer' },
-  { title: 'Kalyan Sen Receives Fulbright Specialist Award', source: 'Press release (PDF)', url: 'http://files.midphasesitebuilder.com/54/d3/54d32047-3264-4c9b-8394-6354200ab653.pdf' },
+  { title: 'Kalyan Sen Receives Fulbright Specialist Award', source: 'Press release (PDF)', url: '/docs/kalyan-sen-fulbright-specialist-award.pdf' },
   { title: 'Fulbright Scholar Electrifies Audiences', source: 'Toastmasters Magazine', url: 'https://www.toastmasters.org/magazine/magazine-issues/2019/jan/6-quick-takes-member-moment' },
 ];
 
@@ -98,7 +135,7 @@ const LEADERS: Leader[] = [
     photoWidth: 1822,
     photoHeight: 1920,
     role: 'Directs all aspects of the company, including R&D/Engineering, Sales and Marketing, Manufacturing, Quality Assurance, and Finance.',
-    emails: ['senkk@sentransformer.com', 'senkk@ieee.org'],
+    emails: ['senkk@sentransformer.com'],
     education: [
       { degree: 'PhD-EE', school: 'Worcester Polytechnic Institute (USA)', year: '1987' },
       { degree: 'MSEE', school: 'Tuskegee University (USA)', year: '1983' },
@@ -122,7 +159,7 @@ const LEADERS: Leader[] = [
     photoWidth: 1820,
     photoHeight: 2140,
     role: 'Responsible for performing the everyday operations of the company, ensuring efficiency and project execution.',
-    emails: ['senml@sentransformer.com', 'senml@ieee.org'],
+    emails: ['senml@sentransformer.com'],
     education: [
       { degree: 'MEE', school: 'Rice University (USA)', year: '1990' },
       { degree: 'BSEE', school: 'Worcester Polytechnic Institute (USA), High Distinction', year: '1988' },
@@ -197,13 +234,14 @@ const COMPARISON: { feature: string; cells: [Cell, Cell, Cell] }[] = [
   { feature: 'Component availability over decades', cells: [['yes', 'Long-lived components'], ['no', 'Electronics become obsolete'], ['yes', 'Long-lived components']] },
 ];
 
+// The problems a transmission planner arrives with come first
 const BENEFITS = [
+  ['Congestion relief', 'Holds the power flow in a line at its design limit instead of tripping the line, which could start a cascading failure of the grid'],
+  ['Grid optimization', 'Harnesses the dormant capacity of underutilized lines, raising their power flows up to the lines’ thermal limits'],
+  ['Data center supply', 'Helps deliver the large amount of power, on a certain corridor, that modern data centers draw'],
+  ['Cost reduction', 'A quicker, cheaper alternative to building new high-voltage transmission lines, a long and costly process'],
   ['Efficiency', 'Reduces reactive power and energy losses in generators, transformers, and lines'],
   ['Sustainability', 'Cuts unnecessary generation to provide the line loss and lowers environmental impact'],
-  ['Grid optimization', 'Harnesses the dormant capacity of underutilized lines, raising their power flows up to the lines’ thermal limits'],
-  ['Congestion relief', 'Holds the power flow in a line at its design limit instead of tripping the line, which could start a cascading failure of the grid'],
-  ['Cost reduction', 'A quicker, cheaper alternative to building new high-voltage transmission lines, a long and costly process'],
-  ['Data center supply', 'Helps deliver the large amount of power, on a certain corridor, that modern data centers draw'],
   ['Flexibility', 'Portable and easily redeployed as grid demands evolve'],
   ['Interoperability', 'Works with components from various suppliers to reduce maintenance and lifecycle costs'],
 ];
@@ -323,6 +361,10 @@ function ContactForm() {
         </div>
       </div>
       <div>
+        <label htmlFor="contact-organization" className="block text-sm font-medium text-[#C7D2E5] mb-1.5">Organization <span className="font-normal text-[#8FA0C2]">(optional)</span></label>
+        <input id="contact-organization" type="text" name="organization" autoComplete="organization" className={fieldClass} />
+      </div>
+      <div>
         <label htmlFor="contact-message" className="block text-sm font-medium text-[#C7D2E5] mb-1.5">Message</label>
         <textarea id="contact-message" name="message" rows={5} required className={fieldClass} />
       </div>
@@ -358,17 +400,8 @@ const subscribeWavesPaused = (onChange: () => void) => {
 // Main App Component (default export for Next.js app/page.jsx)
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const contentRef = useRef<HTMLDivElement>(null);
     const scrollIndicatorRef = useRef<HTMLAnchorElement>(null);
-
-    // Dynamic height calculation for the "Read More" section
-    useEffect(() => {
-        if (contentRef.current) {
-            contentRef.current.style.maxHeight = isExpanded ? `${contentRef.current.scrollHeight + 20}px` : '0px';
-        }
-    }, [isExpanded]);
 
     // Scroll Indicator Fade Logic
     useEffect(() => {
@@ -418,7 +451,7 @@ export default function App() {
     }`;
 
     return (
-        <div style={{ fontFamily: 'Inter, sans-serif' }} className="bg-[#111827] text-[#F9FAFB]">
+        <div className="bg-[#111827] text-[#F9FAFB]">
 
             <a href="#overview-content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:bg-white focus:text-[#0F1B33] focus:px-4 focus:py-2 focus:rounded-md">Skip to content</a>
 
@@ -438,7 +471,7 @@ export default function App() {
                         }`}>Sen Engineering Solutions</span>
                     </a>
 
-                    <nav className="hidden md:flex items-center gap-1" aria-label="Main">
+                    <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
                         {NAV_LINKS.map(link => (
                             <a key={link.href} href={link.href} className={navLinkClass}>{link.label}</a>
                         ))}
@@ -449,7 +482,7 @@ export default function App() {
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         aria-expanded={isMenuOpen}
                         aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-                        className={`md:hidden p-2 rounded-md focus-visible:outline-2 focus-visible:outline-[#3B82F6] transition-colors duration-500 ${
+                        className={`lg:hidden p-2 rounded-md focus-visible:outline-2 focus-visible:outline-[#3B82F6] transition-colors duration-500 ${
                             scrolled ? 'text-[#0F1B33]' : 'text-white'
                         }`}>
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -458,7 +491,7 @@ export default function App() {
                     </button>
                 </div>
 
-                <div className={`md:hidden ${scrolled ? 'bg-white border-t border-[#E2E8F0]' : 'bg-[#071330] border-t border-white/10'} ${isMenuOpen ? 'block' : 'hidden'}`}>
+                <div className={`lg:hidden ${scrolled ? 'bg-white border-t border-[#E2E8F0]' : 'bg-[#071330] border-t border-white/10'} ${isMenuOpen ? 'block' : 'hidden'}`}>
                     {NAV_LINKS.map(link => (
                         <a key={link.href} onClick={() => setIsMenuOpen(false)} href={link.href} className={`block py-3 px-4 font-medium ${
                             scrolled ? 'text-[#334155] hover:bg-[#F1F5F9]' : 'text-[#B6C2D9] hover:bg-white/5 hover:text-white'
@@ -473,15 +506,16 @@ export default function App() {
                 <section id="home" className="relative h-[100svh] min-h-[640px] w-full flex flex-col text-center bg-[radial-gradient(ellipse_at_50%_35%,#10275C_0%,#071330_55%,#050B1E_100%)] overflow-hidden">
                     <HeroBackground paused={wavesPaused} />
 
-                    <div className="relative z-10 flex-1 flex items-center justify-center px-4 sm:px-6 pt-24 pb-6">
+                    <div className="relative z-10 flex-1 flex items-center justify-center px-4 sm:px-6 pt-20 pb-6">
                     <div className="max-w-5xl">
-                        <h1 className="hero-rise text-[2.6rem] sm:text-6xl lg:text-7xl [@media(min-width:1024px)_and_(max-height:820px)]:text-6xl font-black mb-5 text-white tracking-tighter leading-[1.05]" style={{ animationDelay: '100ms' }}>
+                        {/* On short screens the text shrinks so nothing reaches the grid scene */}
+                        <h1 className="hero-rise text-4xl sm:text-6xl lg:text-7xl [@media(min-width:1024px)_and_(max-height:820px)]:text-5xl font-black mb-4 sm:mb-5 text-white tracking-tighter leading-[1.05] text-balance" style={{ animationDelay: '100ms' }}>
                             Sen Engineering Solutions, Inc.
                         </h1>
-                        <p className="hero-rise text-lg sm:text-xl lg:text-2xl text-[#B6C2D9] max-w-3xl mx-auto leading-relaxed" style={{ animationDelay: '300ms' }}>
-                            A technology company developing the <strong className="text-white font-semibold">SMART Power Flow Controller</strong> - a functional requirements-based, cost-effective solution.
+                        <p className="hero-rise text-base sm:text-xl lg:text-2xl [@media(min-width:1024px)_and_(max-height:820px)]:text-lg text-[#B6C2D9] max-w-3xl mx-auto leading-relaxed" style={{ animationDelay: '300ms' }}>
+                            The <strong className="text-white font-semibold">Sen Transformer</strong>, a SMART Power Flow Controller, gives utilities independent control of active and reactive power flow, built from proven transformer and tap-changer technology to deliver more power through existing lines.
                         </p>
-                        <div className="hero-rise mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3" style={{ animationDelay: '500ms' }}>
+                        <div className="hero-rise mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3" style={{ animationDelay: '500ms' }}>
                             <a href="#overview-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">See how it works</a>
                             <a href="#reading-content" className="px-3.5 sm:px-6 py-3 text-sm sm:text-base rounded-lg border border-white/25 hover:border-white/60 hover:bg-white/5 text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Read the research</a>
                         </div>
@@ -518,179 +552,137 @@ export default function App() {
                     <div className="absolute bottom-0 w-full h-12 bg-gradient-to-t from-[#F9FAFB] to-transparent pointer-events-none"></div>
                 </section>
 
-                {/* TECHNOLOGY OVERVIEW CONTENT (Light Theme) - Enhanced animations */}
-                <section id="overview-content" className="py-16 sm:py-24 bg-[#F9FAFB] text-[#0A0A0A]">
+                {/* COMPANY SUMMARY */}
+                <section aria-label="Company at a glance" className="bg-[#F9FAFB] text-[#0F1B33] pt-12 sm:pt-16 pb-16 sm:pb-20">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                        <dl className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 sm:gap-x-8 gap-y-8">
+                            {PROOF.map(([figure, text], i) => (
+                                <div key={figure} data-reveal style={{ transitionDelay: `${i * 80}ms` }} className="flex flex-col border-t-2 border-[#1E3A8A] pt-4">
+                                    <dt className="order-2 mt-1.5 text-sm sm:text-[15px] text-[#475569] leading-relaxed">{text}</dt>
+                                    <dd className="order-1 text-3xl sm:text-4xl font-black tracking-tight text-[#1E3A8A] tabular-nums">{figure}</dd>
+                                </div>
+                            ))}
+                        </dl>
+
+                        <div className="mt-14 sm:mt-16 pt-10 border-t border-[#E2E8F0]">
+                            <p className="text-center text-xs sm:text-sm font-semibold uppercase tracking-[0.16em] text-[#64748B]">Developed, built, tested, and published with</p>
+                            <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-7">
+                                {PARTNERS.map(p => (
+                                    <li key={p.name} title={`${p.name}: ${p.role}`}>
+                                        {/* brightness(0) turns every logo, including Ampcontrol's white-lettered one, into a single tone */}
+                                        <Image src={p.logo} alt={p.name} width={p.width} height={p.height}
+                                            style={{ height: p.shown, width: 'auto' }}
+                                            className="brightness-0 opacity-50 hover:opacity-75 transition-opacity" />
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                {/* VISION AND MISSION */}
+                <section aria-label="Vision and mission" className="bg-[#071330] text-white py-16 sm:py-20">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl grid md:grid-cols-2 gap-10 md:gap-16">
+                        {VISION_MISSION.map(([label, text], i) => (
+                            <div key={label} data-reveal style={{ transitionDelay: `${i * 120}ms` }} className="border-l-2 border-[#3B82F6] pl-6">
+                                <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[#93C5FD]">{label}</h2>
+                                <p className="mt-3 text-xl sm:text-2xl font-semibold leading-snug text-balance">{text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* TECHNOLOGY */}
+                <section id="overview-content" className="py-20 sm:py-28 bg-[#F9FAFB] text-[#0F1B33]">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-                        
-                        <h2 className="text-5xl font-extrabold text-center mb-6 text-[#1E3A8A]">SMART Power Flow Controller - Empowering the Grid</h2>
-                        
-                        {/* Introduction */}
-                        <div className="mb-16 text-center">
-                            <p className="text-xl text-[#374151] leading-relaxed mb-8">
-                                <strong>SMART Power Flow Controller</strong> is a breakthrough in bulk power system technology, hosting a range of benefits over traditional power flow solutions. SMART Power Flow Controller, a patented technology, acts as an Impedance Regulating Transformer and offers a plethora of power flow control features independent active and reactive power flows, voltage, phase angle, Impedance (XL or XC and R or –R, all independently variable) in one, multi-use unit to provide a reliable, cost‐effective, and portable solution to meet today's needs to modernize the grid.
+
+                        <header className="text-center mb-12">
+                            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-balance text-[#1E3A8A]">SMART Power Flow Controller - Empowering the Grid</h2>
+                            <p className="mt-6 text-lg sm:text-xl text-[#374151] leading-relaxed">
+                                <strong>SMART Power Flow Controller</strong> is a breakthrough in bulk power system technology, hosting a range of benefits over traditional power flow solutions. SMART Power Flow Controller, a patented technology, acts as an Impedance Regulating Transformer and offers a plethora of power flow control features independent active and reactive power flows, voltage, phase angle, Impedance (XL or XC and R or –R, all independently variable) in one, multi-use unit to provide a reliable, cost‐effective, and portable solution to meet today&apos;s needs to modernize the grid.
+                            </p>
+                        </header>
+
+                        <figure data-reveal className="rounded-2xl bg-white border border-[#D9E0EA] p-4 sm:p-6 shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
+                            <Image
+                                src="/smart power flow.jpg"
+                                alt="Diagram of a power grid: generation, transformers, and transmission lines feeding distribution and load, with the SMART Power Flow Controller on a controlled path"
+                                width={929}
+                                height={585}
+                                sizes="(min-width: 1024px) 976px, 100vw"
+                                className="w-full h-auto rounded-lg"
+                            />
+                            <figcaption className="mt-3 text-sm text-[#64748B] text-center">The SPFC is installed in a transmission line and controls the power flowing along that path.</figcaption>
+                        </figure>
+
+                        {/* How it works */}
+                        <div className="mt-20">
+                            <h3 className="text-3xl sm:text-4xl font-bold tracking-tight">How it works</h3>
+                            <p className="mt-4 text-lg text-[#475569] leading-relaxed max-w-3xl">
+                                The SPFC redefines how electricity moves through the grid, offering precise, independent control over active and reactive power. By intelligently managing energy flow, it maximizes efficiency, enhances reliability, and minimizes losses across the transmission network.
+                            </p>
+                            <ol className="mt-8 grid md:grid-cols-3 gap-6">
+                                {HOW_IT_WORKS.map(([title, text], i) => (
+                                    <li key={title} data-reveal style={{ transitionDelay: `${i * 100}ms` }}
+                                        className="rounded-2xl bg-white border border-[#D9E0EA] p-6 shadow-[0_20px_40px_-30px_rgba(15,27,51,0.45)]">
+                                        <span className="grid place-items-center w-9 h-9 rounded-full bg-[#1E3A8A] text-white font-bold tabular-nums" aria-hidden="true">{i + 1}</span>
+                                        <h4 className="mt-4 text-xl font-bold leading-snug">{title}</h4>
+                                        <p className="mt-2 text-[#475569] leading-relaxed">{text}</p>
+                                    </li>
+                                ))}
+                            </ol>
+                            <p className="mt-8 text-lg text-[#475569] leading-relaxed max-w-3xl">
+                                Unlike traditional solutions built around a single technology, the SPFC unites the best features of all power-flow concepts developed until now into one functional-requirements-based system that&apos;s simple, scalable, and cost-effective.
                             </p>
 
-                            {/* Product Image Suggestion Placement */}
-                            <div className="my-10 p-6 bg-gray-200 rounded-xl shadow-inner border border-gray-300 hover:shadow-xl transition-shadow duration-300">
-                                <Image
-                                    src="/smart power flow.jpg"
-                                    alt="SMART Power Flow Controller Product Image"
-                                    width={929}
-                                    height={585}
-                                    sizes="(min-width: 1024px) 976px, 100vw"
-                                    className="w-full h-auto rounded-lg shadow-lg mx-auto"
-                                />
-                            </div>
-
-                            {/* Vision and Mission */}
-                            <div className="bg-white p-6 rounded-xl border-l-4 border-[#3B82F6] text-left shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                                <h3 className="text-2xl font-semibold mb-2 text-[#1E3A8A]">Vision and Mission</h3>
-                                <p className="text-[#374151]">
-                                    We strive to serve society by delivering advanced power‑flow control technology. Through publications, tutorials, seminars, and webinars, we educate customers, enabling them to define functional requirements and obtain cost‑effective solutions.
-                                </p>
-                            </div>
+                            <h4 className="mt-12 mb-5 text-xl font-bold">Functional principles: S.M.A.R.T.</h4>
+                            <dl className="grid sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-5">
+                                {SMART.map(([letter, word, text]) => (
+                                    <div key={letter} className="flex lg:block gap-4">
+                                        <span className="block text-4xl font-black leading-none text-[#2563EB] w-8 lg:w-auto flex-shrink-0" aria-hidden="true">{letter}</span>
+                                        <div className="lg:mt-2">
+                                            <dt className="font-semibold">{word}</dt>
+                                            <dd className="mt-0.5 text-[15px] text-[#475569] leading-relaxed">{text}</dd>
+                                        </div>
+                                    </div>
+                                ))}
+                            </dl>
                         </div>
 
-                        {/* Content Block 1: Empowering Grid & Read More */}
-                        <div className="mb-16">
-                            <h3 className="text-4xl font-bold mb-6 text-[#0A0A0A]">Empowering a Smarter Grid</h3>
-                            <p className="text-lg text-[#374151] leading-relaxed mb-6">
-                                The SMART Power Flow Controller (SPFC) redefines how electricity moves through the grid - offering precise, independent control over active and reactive power. By intelligently managing energy flow, it maximizes efficiency, enhances reliability, and minimizes losses across the transmission network.
-                            </p>
-                            <p className="text-lg text-[#374151] leading-relaxed mb-8">
-                                Unlike traditional solutions built around a single technology, the SPFC unites the best features of all power-flow concepts developed until now into one, functional-requirements-based system that's simple, scalable, and cost-effective.
-                            </p>
-                            
-                            {/* Read More Toggle Button */}
-                            <button onClick={() => setIsExpanded(!isExpanded)} className="flex items-center text-lg font-semibold text-[#2563EB] hover:text-[#1E3A8A] transition-all duration-300 hover:translate-x-1">
-                                <span>{isExpanded ? 'Show Less' : 'Read More'}</span>
-                                <svg className={`w-5 h-5 ml-2 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-
-                            {/* How the SPFC Works (Hidden Content) */}
-                            <div ref={contentRef} className="mt-8 overflow-hidden transition-all duration-500 ease-in-out">
-                                <h4 className="text-3xl font-bold text-[#0A0A0A] mb-4 border-b pb-2 border-[#9CA3AF]">How the SPFC Works</h4>
-                                <p className="text-lg text-[#374151] leading-relaxed mb-6">
-                                    The SPFC acts as an <strong>impedance-regulating transformer</strong>, dynamically adjusting both resistance and reactance in a transmission line. This allows it to control power flows independently, maximizing useful active power and minimizing unwanted reactive power.
-                                </p>
-                                <p className="text-lg text-[#374151] leading-relaxed mb-8">
-                                    While power-electronics-based systems can react in milliseconds, most utility applications only require response times measured in seconds or longer. The SPFC's design meets those real-world functional requirements delivering high performance at a fraction of the cost of power electronics solutions.
-                                </p>
-
-                                <h5 className="text-xl font-bold text-[#1E3A8A] mb-4">Functional Principles (S.M.A.R.T.)</h5>
-                                <ul className="space-y-3 text-lg text-[#374151] list-none p-0">
-                                    <li className="flex items-start">
-                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">S - Specific:</span> 
-                                        <span>Meets the actual needs of utilities</span>
-                                    </li>
-                                    <li className="flex items-start">
-                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">M - Measurable:</span> 
-                                        <span>Reliable, efficient, cost-effective, and portable</span>
-                                    </li>
-                                    <li className="flex items-start">
-                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">A - Attainable:</span> 
-                                        <span>Built for realistic grid performance expectations</span>
-                                    </li>
-                                    <li className="flex items-start">
-                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">R - Relevant:</span> 
-                                        <span>Improves overall grid efficiency and resilience</span>
-                                    </li>
-                                    <li className="flex items-start">
-                                        <span className="font-bold text-[#2563EB] mr-3 whitespace-nowrap">T - Time-Bound:</span> 
-                                        <span>Delivered with defined milestones</span>
-                                    </li>
-                                </ul>
-                            </div>
+                        {/* Benefits */}
+                        <div className="mt-20">
+                            <h3 className="text-3xl sm:text-4xl font-bold tracking-tight">What utilities gain by using Sen Transformer</h3>
+                            <dl className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
+                                {BENEFITS.map(([title, text]) => (
+                                    <div key={title} className="border-t-2 border-[#1E3A8A] pt-3">
+                                        <dt className="font-semibold">{title}</dt>
+                                        <dd className="mt-1 text-[#475569] leading-relaxed">{text}</dd>
+                                    </div>
+                                ))}
+                            </dl>
                         </div>
 
-                        {/* Content Block 2: Key Benefits */}
-                        <div className="mb-16">
-                            <h3 className="text-4xl font-bold mb-6 text-[#0A0A0A]">Key Benefits</h3>
-                            
-                            <p className="text-lg text-[#374151] leading-relaxed mb-8 max-w-3xl">
+                        {/* Comparison */}
+                        <div id="comparison" className="mt-20 scroll-mt-24">
+                            <h3 className="text-3xl sm:text-4xl font-bold tracking-tight">How it compares</h3>
+                            <p className="mt-4 mb-8 text-lg text-[#475569] leading-relaxed max-w-3xl">
                                 How the SPFC compares with the other ways to control power flow on a transmission line.
                             </p>
 
                             <ComparisonTable />
+                        </div>
 
-                            <h4 className="mt-14 mb-5 text-2xl font-bold text-[#0A0A0A]">What utilities gain by using Sen Transformer</h4>
-                            <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
-                                {BENEFITS.map(([title, text]) => (
-                                    <div key={title} className="border-t-2 border-[#1E3A8A] pt-3">
-                                        <dt className="font-semibold text-[#0A0A0A]">{title}</dt>
-                                        <dd className="mt-1 text-[#374151] leading-relaxed">{text}</dd>
-                                    </div>
-                                ))}
-                            </dl>
-
-                            {/* The Result */}
-                            <div className="mt-10 p-6 bg-[#3B82F6]/10 rounded-xl border border-[#3B82F6]/30 shadow-md hover:shadow-xl transition-shadow duration-300">
-                                <h4 className="text-2xl font-bold text-[#1E3A8A] mb-2">The Result</h4>
-                                <p className="text-lg text-[#374151]">
+                        {/* The Result */}
+                        <div data-reveal className="mt-16 flex flex-col md:flex-row md:items-center gap-6 md:gap-10 rounded-2xl bg-[#EEF3FC] border border-[#C9D8F5] p-6 sm:p-8">
+                            <div className="flex-grow">
+                                <h3 className="text-2xl font-bold text-[#1E3A8A]">The result</h3>
+                                <p className="mt-2 text-lg text-[#374151] leading-relaxed">
                                     A more intelligent, reliable, and sustainable power grid - built around functional requirements rather than rigid technologies. The SPFC enables utilities to do more with existing infrastructure, ensuring a smarter, cleaner, and future-ready energy system.
                                 </p>
                             </div>
+                            <a href="#contact-section" className="flex-shrink-0 self-start md:self-center whitespace-nowrap px-6 py-3 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">Contact us</a>
                         </div>
 
-                    </div>
-                </section>
-
-                {/* FURTHER READING */}
-                <section id="reading-content" className="py-20 sm:py-28 bg-[#EEF2F7] text-[#0F1B33]">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-                        <header className="text-center max-w-2xl mx-auto mb-16">
-                            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0F1B33]">Further reading</h2>
-                            <p className="mt-4 text-lg text-[#475569] leading-relaxed">
-                                Books, papers, and articles on power flow control by K. K. Sen and M. L. Sen.
-                            </p>
-                            <nav aria-label="Reading sections" className="mt-8 flex flex-wrap justify-center gap-2">
-                                {READING_LINKS.map(([id, label]) => (
-                                    <a key={id} href={`#${id}`} className="px-4 py-2 rounded-full bg-white border border-[#D9E0EA] text-sm font-semibold text-[#1E3A8A] hover:border-[#3B82F6] hover:bg-[#F3F6FB] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">{label}</a>
-                                ))}
-                            </nav>
-                        </header>
-
-                        {/* Books */}
-                        <div id="books" className="scroll-mt-28 mb-20">
-                            <ReadingHeading title="Books" count={BOOKS.length} />
-                            <div className="grid md:grid-cols-2 gap-6">
-                                {BOOKS.map((book, i) => (
-                                    <article key={book.isbn} data-reveal style={{ transitionDelay: `${i * 120}ms` }}
-                                        className="book-card flex flex-col sm:flex-row gap-6 bg-white rounded-2xl p-6 border border-[#D9E0EA] shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
-                                        <a href={book.url} target="_blank" rel="noopener noreferrer" tabIndex={-1} className="flex-shrink-0 self-center sm:self-start">
-                                            <Image src={book.cover} alt={`Cover of ${book.title}`} width={book.width} height={book.height} sizes="144px" className="book-cover w-36 sm:w-32 lg:w-36 h-auto rounded-md" />
-                                        </a>
-                                        <div className="flex flex-col">
-                                            <h4 className="text-xl font-bold leading-snug text-[#0F1B33]">{book.title}</h4>
-                                            <p className="mt-2 text-sm text-[#64748B]">By K. K. Sen and M. L. Sen, published by Wiley. ISBN {book.isbn}</p>
-                                            <p className="mt-3 text-[#475569] leading-relaxed">{book.blurb}</p>
-                                            <a href={book.url} target="_blank" rel="noopener noreferrer"
-                                                className="mt-4 inline-flex items-center gap-1.5 self-start font-semibold text-[#1E3A8A] hover:text-[#3B82F6] rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">
-                                                View on Wiley <ExternalIcon className="w-4 h-4" />
-                                            </a>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* IEEE papers */}
-                        <div id="ieee-papers" className="scroll-mt-28 mb-20">
-                            <ReadingHeading title="IEEE papers" count={IEEE_PAPERS.length} />
-                            <ResourceGrid items={IEEE_PAPERS} />
-                        </div>
-
-                        {/* Articles and press */}
-                        <div className="grid md:grid-cols-2 gap-x-10 gap-y-16">
-                            <div id="industry-articles" className="scroll-mt-28">
-                                <ReadingHeading title="Industry articles" count={INDUSTRY_ARTICLES.length} />
-                                <ResourceGrid items={INDUSTRY_ARTICLES} single />
-                            </div>
-                            <div id="press" className="scroll-mt-28">
-                                <ReadingHeading title="Press" count={PRESS.length} />
-                                <ResourceGrid items={PRESS} single />
-                            </div>
-                        </div>
                     </div>
                 </section>
 
@@ -760,6 +752,67 @@ export default function App() {
                                 </a>
                             </footer>
                         </blockquote>
+                    </div>
+                </section>
+
+                {/* FURTHER READING */}
+                <section id="reading-content" className="py-20 sm:py-28 bg-[#EEF2F7] text-[#0F1B33]">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                        <header className="text-center max-w-2xl mx-auto mb-16">
+                            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[#0F1B33]">Further reading</h2>
+                            <p className="mt-4 text-lg text-[#475569] leading-relaxed">
+                                Books, papers, and articles on power flow control by K. K. Sen and M. L. Sen.
+                            </p>
+                        </header>
+
+                        {/* Sits outside the header so it stays stuck below the fixed site header for the whole reading section, then scrolls away with it */}
+                        <nav aria-label="Reading sections" className="sticky top-20 z-30 -mt-8 mb-16 flex flex-wrap justify-center gap-2 pointer-events-none">
+                            {READING_LINKS.map(([id, label]) => (
+                                <a key={id} href={`#${id}`} className="pointer-events-auto px-4 py-2 rounded-full bg-white/95 backdrop-blur border border-[#D9E0EA] shadow-[0_8px_20px_-10px_rgba(15,27,51,0.45)] text-sm font-semibold text-[#1E3A8A] hover:border-[#3B82F6] hover:bg-[#F3F6FB] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">{label}</a>
+                            ))}
+                        </nav>
+
+                        {/* Books */}
+                        <div id="books" className="scroll-mt-48 sm:scroll-mt-36 mb-20">
+                            <ReadingHeading title="Books" count={BOOKS.length} />
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {BOOKS.map((book, i) => (
+                                    <article key={book.isbn} data-reveal style={{ transitionDelay: `${i * 120}ms` }}
+                                        className="book-card flex flex-col sm:flex-row gap-6 bg-white rounded-2xl p-6 border border-[#D9E0EA] shadow-[0_20px_40px_-28px_rgba(15,27,51,0.45)]">
+                                        <a href={book.url} target="_blank" rel="noopener noreferrer" tabIndex={-1} className="flex-shrink-0 self-center sm:self-start">
+                                            <Image src={book.cover} alt={`Cover of ${book.title}`} width={book.width} height={book.height} sizes="144px" className="book-cover w-36 sm:w-32 lg:w-36 h-auto rounded-md" />
+                                        </a>
+                                        <div className="flex flex-col">
+                                            <h4 className="text-xl font-bold leading-snug text-[#0F1B33]">{book.title}</h4>
+                                            <p className="mt-2 text-sm text-[#64748B]">By K. K. Sen and M. L. Sen, published by Wiley. ISBN {book.isbn}</p>
+                                            <p className="mt-3 text-[#475569] leading-relaxed">{book.blurb}</p>
+                                            <a href={book.url} target="_blank" rel="noopener noreferrer"
+                                                className="mt-4 inline-flex items-center gap-1.5 self-start font-semibold text-[#1E3A8A] hover:text-[#3B82F6] rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B82F6]">
+                                                View on Wiley <ExternalIcon className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* IEEE papers */}
+                        <div id="ieee-papers" className="scroll-mt-48 sm:scroll-mt-36 mb-20">
+                            <ReadingHeading title="IEEE papers" count={IEEE_PAPERS.length} />
+                            <ResourceGrid items={IEEE_PAPERS} />
+                        </div>
+
+                        {/* Articles and press */}
+                        <div className="grid md:grid-cols-2 gap-x-10 gap-y-16">
+                            <div id="industry-articles" className="scroll-mt-48 sm:scroll-mt-36">
+                                <ReadingHeading title="Industry articles" count={INDUSTRY_ARTICLES.length} />
+                                <ResourceGrid items={INDUSTRY_ARTICLES} single />
+                            </div>
+                            <div id="press" className="scroll-mt-48 sm:scroll-mt-36">
+                                <ReadingHeading title="Press" count={PRESS.length} />
+                                <ResourceGrid items={PRESS} single />
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -837,7 +890,7 @@ export default function App() {
                         <div>
                             <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight">Contact us</h2>
                             <p className="mt-4 text-lg text-[#B6C2D9] leading-relaxed max-w-md">
-                                Questions about the SMART Power Flow Controller, a project, or a talk? Send a message and we’ll reply by email.
+                                Interested in working with us, or want to learn more about how the Sen Transformer works? Send us a message about business opportunities, partnerships, or the technology, and we’ll reply by email.
                             </p>
                             <div className="mt-8 space-y-4">
                                 {LEADERS.map(person => (

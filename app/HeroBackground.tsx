@@ -341,7 +341,7 @@ function makeScene(): Painter {
     ctx.fillStyle = `rgba(${SKY},0.9)`;
     ctx.font = `600 ${12 / s}px Inter, system-ui, sans-serif`;
     ctx.textAlign = "center";
-    ctx.fillText("SMART Power Flow Controller", 770, G + 20 / s);
+    ctx.fillText("Sen Transformer", 770, G + 20 / s);
 
     ctx.restore();
   };
@@ -498,7 +498,7 @@ function makeMobileScene(): Painter {
     ctx.fillStyle = `rgba(${SKY},0.9)`;
     ctx.font = `600 ${12 / s}px Inter, system-ui, sans-serif`;
     ctx.textAlign = "center";
-    ctx.fillText("SMART Power Flow Controller", 169, G + 20 / s);
+    ctx.fillText("Sen Transformer", 169, G + 20 / s);
 
     ctx.restore();
   };
